@@ -5,7 +5,7 @@ function LoginPage(){
     return(
         <>
             <Helmet>
-                <title>Login</title>
+                <title>Galaxy Comp | Login</title>
             </Helmet>
             <Login/>
         </>
