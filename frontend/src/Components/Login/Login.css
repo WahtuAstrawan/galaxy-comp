@@ -54,11 +54,6 @@
     border-radius: 6px;
 }
 
-body{
-    height: 100vh;
-    background: linear-gradient(#000, darkblue);
-}
-
 .input input{
     height: 50px;
     width: 400px;
@@ -121,4 +116,9 @@ body{
     .submit-btn {
       width: 100%;
     }
+}
+
+.bg-login{
+    height: 100vh;
+    background: linear-gradient(#000, darkblue);
 }

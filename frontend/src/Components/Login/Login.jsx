@@ -1,8 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './Login.css'
 import * as Unicons from '@iconscout/react-unicons';
 
 function Login() {
+    useEffect(() =>{
+        document.body.classList.add('bg-login');
+    }, []);
+
   return (
     <div className='container'>
         <div className="header">

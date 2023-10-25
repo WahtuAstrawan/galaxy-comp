@@ -1,0 +1,11 @@
+.bg-nopage{
+    height: 100vh;
+    background: black;
+}
+
+.message{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+}
