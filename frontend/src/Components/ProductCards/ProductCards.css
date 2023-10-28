@@ -1,0 +1,10 @@
+.card-list-horizontal {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+.card-list-horizontal > *{
+    flex: 0 0 auto
+}
+  
