@@ -1,52 +1,51 @@
 import React, { useState } from 'react'
 import './Navbar.css'
-import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css'
 import logoComp from './logo.png'
+import { UilBars } from '@iconscout/react-unicons'
 import {
-    Collapse,
     Navbar,
-    NavbarToggler,
-    NavbarBrand,
     Nav,
-    NavItem,
+    NavbarBrand,
     NavLink,
+    UncontrolledDropdown,
+    DropdownToggle,
+    DropdownMenu,
+    DropdownItem,
   } from 'reactstrap';
 
 
 function NavbarLandingPage() {
-    const [isOpen, setIsOpen] = useState(false);
-  
-    const toggle = () => setIsOpen(!isOpen);
-  
     return (
       <div>
         <Navbar 
-            style={{ backgroundColor:'darkblue', fontWeight:"bold" }}
+            style={{ backgroundColor:'black', fontWeight:"bold"}}
         >
-          <NavbarBrand href="#" style={{ color:"white", fontSize:"25px" }}>
+          <NavbarBrand style={{ color:"white", fontSize:"25px", marginRight:"3rem"}}>
             <img src={logoComp} alt="logo" style={{ width:"50px", height:"50px", marginRight:"10px" }}/>
             Galaxy Comp
           </NavbarBrand>
-          <NavbarToggler onClick={toggle} style={{ backgroundColor:"white" }}/>
-          <Collapse isOpen={isOpen} navbar>
-            <Nav className="me-auto" navbar style={{ borderRadius:"10px"}}>
-              <NavItem>
-                <NavLink href="#about-section" style={{ color:"white", borderTop:"1px solid white" }} className='link-menu'>
-                    About
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="#product-section" style={{ color:"white" , borderTop:"1px solid white"}} className='link-menu'>
-                    Product
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="#" style={{ color:"white", borderTop:"1px solid white"}} className='link-menu'>
-                    Contact
-                </NavLink>
-              </NavItem>
-            </Nav>
-          </Collapse>
+          <Nav className='me-auto normal-navbar' >
+            <NavLink href='#about-section' style={{ color:"white", width:"9rem" }}>About Us</NavLink>
+            <NavLink href='#products-section' style={{ color:"white", width:"9rem" }}>Products</NavLink>
+            <NavLink href='#contact-section' style={{ color:"white", width:"9rem" }}>Contact</NavLink>
+          </Nav>
+          <UncontrolledDropdown>
+            <DropdownToggle color="light" className='dropdown-menu-main'>
+              <UilBars></UilBars>
+            </DropdownToggle>
+            <DropdownMenu className='dropdown-menu'>
+              <DropdownItem href='#about-section'>
+                About Us
+              </DropdownItem>
+              <DropdownItem href='#products-section'>
+                Products
+              </DropdownItem>
+              <DropdownItem href='#contact-section'>
+                Contact
+              </DropdownItem>
+            </DropdownMenu>
+          </UncontrolledDropdown>
         </Navbar>
       </div>
     );

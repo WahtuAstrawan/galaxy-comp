@@ -7,4 +7,9 @@
 .card-list-horizontal > *{
     flex: 0 0 auto
 }
+
+.card:hover{
+  cursor: pointer;
+  background-color: lightblue;
+}
   
