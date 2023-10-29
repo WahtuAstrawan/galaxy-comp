@@ -47,8 +47,9 @@ function ProductCards() {
                 </CardText>
               </CardBody>
             </a>
-
-            <Modal isOpen={modal} toggle={toggle}>
+          </Card>
+        ))}
+        <Modal isOpen={modal} toggle={toggle}>
               <ModalHeader toggle={toggle}>{cardData[0].title}</ModalHeader>
               <ModalBody>
                 <div>
@@ -68,8 +69,6 @@ function ProductCards() {
                   </Button>
               </ModalFooter>
             </Modal>
-          </Card>
-        ))}
       </div>
     </>
   )

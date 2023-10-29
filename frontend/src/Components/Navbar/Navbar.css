@@ -1,19 +1,24 @@
-.dropdown-menu > *{
-    width: 20rem;
+.dropdown-navbar{
+    width: 3rem;
     height: 3rem;
 }
 
-.dropdown-menu > *:hover{
+.dropdown-navbar-menu:hover{
+    color: lightblue;
+}
+
+#normal-navbar h6:hover{
     color: lightblue;
 }
 
 @media (max-width: 775px) {
-    .normal-navbar{
+    #normal-navbar{
         display: none;
     }
 }
+
 @media (min-width: 775px) {
-    .dropdown-menu-main{
+    .dropdown-navbar{
         display: none;
     }
 }

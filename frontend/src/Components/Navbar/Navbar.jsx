@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import './Navbar.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import logoComp from './logo.png'
@@ -19,22 +19,22 @@ function NavbarLandingPage() {
     return (
       <div>
         <Navbar 
-            style={{ backgroundColor:'black', fontWeight:"bold"}}
+            style={{ backgroundColor:'#24262b', fontWeight:"bold"}}
         >
-          <NavbarBrand style={{ color:"white", fontSize:"25px", marginRight:"3rem"}}>
+          <NavbarBrand style={{ color:"white", fontSize:"28px", marginRight:"3rem"}}>
             <img src={logoComp} alt="logo" style={{ width:"50px", height:"50px", marginRight:"10px" }}/>
             Galaxy Comp
           </NavbarBrand>
-          <Nav className='me-auto normal-navbar' >
-            <NavLink href='#about-section' style={{ color:"white", width:"9rem" }}>About Us</NavLink>
-            <NavLink href='#products-section' style={{ color:"white", width:"9rem" }}>Products</NavLink>
-            <NavLink href='#contact-section' style={{ color:"white", width:"9rem" }}>Contact</NavLink>
+          <Nav className='me-auto' id='normal-navbar'>
+            <NavLink href='#about-section' style={{ color:"white", width:"9rem" }}><h6>About Us</h6></NavLink>
+            <NavLink href='#products-section' style={{ color:"white", width:"9rem" }}> <h6>Products</h6></NavLink>
+            <NavLink href='#contact-section' style={{ color:"white", width:"9rem" }}> <h6>Contact</h6></NavLink>
           </Nav>
-          <UncontrolledDropdown>
-            <DropdownToggle color="light" className='dropdown-menu-main'>
+          <UncontrolledDropdown className='dropdown-navbar'>
+            <DropdownToggle color="light">
               <UilBars></UilBars>
             </DropdownToggle>
-            <DropdownMenu className='dropdown-menu'>
+            <DropdownMenu className='dropdown-navbar-menu'>
               <DropdownItem href='#about-section'>
                 About Us
               </DropdownItem>
