@@ -8,7 +8,7 @@ function Login() {
     }, []);
 
   return (
-    <div className='container'>
+    <div className='container-login'>
         <div className="header">
             <div className="text-title">Galaxy Comp</div>
             <div className="text">Login Page</div>
