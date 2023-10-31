@@ -1,0 +1,11 @@
+.MainDash{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    margin-left: 11rem;
+}
+
+.cards{
+    margin-left: 1rem;
+}
+

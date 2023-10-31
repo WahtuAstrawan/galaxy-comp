@@ -1,0 +1,10 @@
+.bg-admin {
+  height: 100vh;
+  color: var(--black);
+  background: linear-gradient(
+    106.37deg,
+    #aad1ff 29.63%,
+    #89d0ff 51.55%,
+    #aafcff 90.85%
+  );
+}
