@@ -2,10 +2,11 @@
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    margin-left: 11rem;
+    margin-left: 12rem;
+    margin-top: 2rem;
 }
 
-.cards{
-    margin-left: 1rem;
+.cards-main{
+    margin-left: 0rem;
 }
 

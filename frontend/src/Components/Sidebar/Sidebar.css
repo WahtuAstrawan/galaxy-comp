@@ -11,7 +11,7 @@ li {
   margin-bottom: 25px;
   border-bottom: 1px solid #333;
   padding-bottom: 23px;
-  width: 220%;
+  width: 90%;
 }
 
 a {
@@ -24,6 +24,7 @@ a {
   color: rgb(21, 21, 69);
 }
 
+
 /* Menambahkan aturan media query untuk ukuran layar yang lebih kecil */
 @media (max-width: 768px) {
   li {
@@ -31,7 +32,7 @@ a {
   }
 
   .sidebar {
-    width: 50px; /* Lebar sidebar dalam keadaan terbuka pada layar kecil */
+    width: 5px; /* Lebar sidebar dalam keadaan terbuka pada layar kecil */
     padding: 3rem; /* Padding juga dikurangi agar lebih kecil */
   }
 
@@ -55,43 +56,35 @@ a {
 
 .sidebar {
   position: fixed;
-  top: -5rem;
-  left: -4rem;
-  height: 100%;
-  width: 3rem;
+  top: 0rem;
+  left: -1rem;
+  height: 150%;
+  width: 12rem;
   background-color: var(--glass);
   color: #000000;
-  padding: 6rem;
+  padding: 1rem;
   backdrop-filter: blur(10px);
   border-radius: 10px;
   border: 3px solid rgb(255, 255, 255);
   transition: left 0.3s;
 }
 
-.sidebar.open {
-  left: 0; /* Tampilkan sidebar saat class "open" aktif */
-}
-
 .logo {
   width: 3rem;
   height: 3rem;
+  margin-left: 1rem;
 }
 
 .sidebar .logo-container p {
   align-items: center;
-  width: 100px;
+  width: 10rem;
   font-weight: 700;
   font-size: medium;
   font-family: Georgia, 'Times New Roman', Times, serif;
-}
-
-.sidebar .logo-container {
   margin-bottom: 40px;
 }
 
-.sidebar .logo-container .logo {
-  align-items: center;
-  margin-left: 28px;
+.text-menu-link *{
+  text-decoration: none;
+  color: black
 }
-
-/* Tambahkan CSS styling untuk ikon di sini */

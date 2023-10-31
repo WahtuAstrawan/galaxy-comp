@@ -11,20 +11,23 @@ const Cards = () => {
     <div className="Cards">
       <div className="parentcontainer">
         <div className="statistic-card">
+
           <h2>{card1.title1}</h2>
-          <p>{card1.value1}</p>
+          <p className='p-text-cards'>{card1.value1}</p>
         </div>
       </div>
       <div className="parentcontainer">
         <div className="statistic-card">
+
           <h2>{card2.title1}</h2>
-          <p>{card2.value1}</p>
+          <p className='p-text-cards'>{card2.value1}</p>
         </div>
       </div>
       <div className="parentcard"> {/* Card 3 di sini */}
         <div className="statistic-card">
+          
           <h2>{card3.title1}</h2>
-          <p>{card3.value1}</p>
+          <p className='p-text-cards'>{card3.value1}</p>
         </div>
       </div>
     </div>

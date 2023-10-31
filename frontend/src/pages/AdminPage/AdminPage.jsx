@@ -19,8 +19,6 @@ function AdminPage(){
             </Helmet>
             <Sidebar/>
             <MainDash/>
-            <Products/>
-        
         </>
     )
 }

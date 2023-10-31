@@ -1,38 +1,39 @@
-/* Products.css */
+/* Tambahkan ini ke dalam file Products.css */
 
-.product-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
-  
-  .product-card {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 20px;
-    text-align: center;
-    flex: 0 1 calc(30% - 20px); /* Menentukan lebar card (sesuaikan dengan kebutuhan Anda) */
-    margin: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s;
-  }
-  
-  .product-card:hover {
-    transform: scale(1.05);
-  }
-  
-  button {
-    margin: 5px;
-    padding: 8px 16px;
-    background-color: #007BFF; /* Warna latar tombol */
-    color: #fff; /* Warna teks tombol */
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-  }
-  
-  button:hover {
-    background-color: #0056b3; /* Warna latar tombol saat dihover */
-  }
-  
+.card-list-title {
+  text-align: center;
+}
+
+.card-list-horizontal {
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.card-list-horizontal > * {
+  flex: 0 0 auto;
+}
+
+.card {
+  cursor: pointer;
+  background-color: #f8f8f8;
+  transition: background-color 0.3s;
+}
+
+.card:hover {
+  background-color: #e0e0e0;
+}
+
+.product-buttons {
+  display: flex;
+  justify-content:space-between;
+  margin: 10rem;
+}
+
+.product-buttons button {
+  margin-right: 10rem; /* Jarak antara tombol Edit dan Hapus */
+}
+
+.buttonpr{
+  margin: 10px;
+}
