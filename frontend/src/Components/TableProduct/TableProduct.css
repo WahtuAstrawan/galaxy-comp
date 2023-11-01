@@ -1,3 +1,7 @@
 .detail-icon:hover{
     cursor: pointer;
 }
+
+.pagination-section {
+    border-bottom: 1px solid gray;
+}
