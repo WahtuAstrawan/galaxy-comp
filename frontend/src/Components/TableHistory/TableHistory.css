@@ -1,0 +1,57 @@
+/* Default styles */
+.table-products-section {
+    padding: 20px;
+  }
+  
+  .table-info {
+    width: 100%;
+    overflow-x: auto;
+  }
+  
+  /* For screens with a maximum width of 600px and smaller */
+  @media screen and (max-width: 600px) {
+    .table-info {
+      display: block;
+    }
+  
+    .table-info table {
+      width: 100%;
+    }
+  
+    .table-info thead {
+      display: none;
+    }
+  
+    .table-info tbody {
+      display: block;
+    }
+  
+    .table-info tr {
+      margin-bottom: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .table-info td {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  
+    .table-info td:before {
+      content: attr(data-label);
+      font-weight: bold;
+      margin-right: 10px;
+    }
+  
+    .actionhis1,
+    .action2 {
+      display: block;
+      text-align: center;
+      margin: 10px 0;
+    }
+  }
+  
+  /* Additional styling as needed for larger screens */
+  

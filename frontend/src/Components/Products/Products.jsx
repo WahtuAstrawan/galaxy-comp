@@ -22,7 +22,7 @@ function Products() {
   return (
     <>
       <div className='card-list-title' id='products-section' style={{ paddingBottom: "50px", paddingTop: "50px" }}>
-        <h1>Product List</h1>
+        <h1>Choose Product</h1>
       </div>
       <div className='card-list-horizontal'>
         {Array(10).fill(0).map((_, index) => (
@@ -44,10 +44,7 @@ function Products() {
                   <br />
                   Stock: {cardData[0].stock} Unit
                 </CardText>
-               
-                <Button  className= "buttonpr" color="primary" onClick={() => handleEditProduct(cardData[0])}>Edit</Button>
-                <Button className= "buttonpr" color="danger" onClick={() => handleDeleteProduct(cardData[0].title)}>Delete</Button>
-                
+                <Button color="primary">Add</Button>
               </CardBody>
             </a>
           </Card>
@@ -75,18 +72,6 @@ function Products() {
       </div>
     </>
   );
-}
-
-// Fungsi untuk menangani Edit produk
-function handleEditProduct(product) {
-  // Tambahkan logika untuk mengedit produk di sini
-  console.log('Edit product:', product);
-}
-
-// Fungsi untuk menangani Hapus produk
-function handleDeleteProduct(productTitle) {
-  // Tambahkan logika untuk menghapus produk di sini
-  console.log('Delete product:', productTitle);
 }
 
 export default Products;

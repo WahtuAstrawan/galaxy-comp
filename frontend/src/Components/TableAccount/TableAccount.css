@@ -1,0 +1,24 @@
+.table-info {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.actionacc2 {
+    display:inline-flex;
+    margin: 3px;
+}
+
+.actionacc1 {
+    margin-left: -5px;
+}
+
+@media screen and (max-width: 600px) {
+    .table-info {
+        display: block;
+    }
+
+    .table-info table {
+        width: 100%;
+    }
+
+}

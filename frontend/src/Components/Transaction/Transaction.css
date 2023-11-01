@@ -1,0 +1,42 @@
+.contenttrans {
+    margin-top: 1rem;
+  }
+  
+  .transaction-form {
+    display: block;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10rem;
+  }
+  
+  .transaction-input {
+    margin: 1rem;
+  }
+  
+  /* Lebar maksimal untuk kolom Price */
+  .transaction-input input[placeholder="Price"] {
+    width: 100%;
+  }
+  
+  /* Lebar maksimal untuk kolom Stored */
+  .transaction-input input[placeholder="Stored"] {
+    width: 100%;
+  }
+  
+  /* Lebar maksimal untuk kolom Changes */
+  .transaction-input input[placeholder="Changes"] {
+    width: 100%;
+  }
+  
+  /* Style lainnya sesuai kebutuhan */
+  
+  /* Responsif ketika lebar layar kurang dari 600px */
+  @media screen and (max-width: 600px) {
+    .transaction-form {
+      display: block;
+    }
+  
+    .transaction-input input {
+      width: 100%; /* Memastikan input memenuhi lebar layar penuh */
+    }
+  }
+  
