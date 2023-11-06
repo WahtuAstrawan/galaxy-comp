@@ -1,0 +1,40 @@
+/* Tambahkan ini ke dalam file Products.css */
+
+.carttitle{
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+}
+  
+  .card-list-horizontal {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  
+  .card-list-horizontal > * {
+    flex: 0 0 auto;
+  }
+  
+  .card {
+    cursor: pointer;
+    background-color: #f8f8f8;
+    transition: background-color 0.3s;
+  }
+  
+  .card:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .product-buttons {
+    display: flex;
+    justify-content:space-between;
+    margin: 10rem;
+  }
+  
+  .product-buttons button {
+    margin-right: 10rem; /* Jarak antara tombol Edit dan Hapus */
+  }
+  
+  .buttonpr{
+    margin: 10px;
+  }

@@ -1,0 +1,50 @@
+.Cards {
+  display: flex;
+  flex-wrap: wrap; /* Mengatur agar flex item wrap ke baris baru */
+  justify-content: center;
+}
+
+.parentcontainer {
+  /* Hapus margin untuk menghilangkan jarak yang tidak diinginkan */
+  display: flex;
+  justify-content: space-between; /* Mengatur jarak antara dua kotak statistik */
+  width: 25rem;
+  height: 15rem;
+  margin: 1rem;
+}
+
+.parentcard {
+  display: flex;
+  justify-content: space-between; /* Mengatur jarak antara dua kotak statistik */
+  width: 52rem;
+  height: 15rem;
+}
+
+.statistic-card {
+  background-color: var(--glass);
+  border-radius: 8px;
+  text-align: center;
+  flex: 2; /* Mengatur agar dua kotak statistik berukuran sama */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+  margin: 5px;
+  border: 2px solid rgb(255, 255, 255);
+  margin-left: -1rem;
+}
+
+.statistic-card:hover {
+  transform: scale(1.05);
+}
+
+h2 {
+  font-size: 20px;
+  margin: 0;
+  color: #333;
+}
+
+.p-text-cards {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 10px 0;
+  color: #000000;
+}

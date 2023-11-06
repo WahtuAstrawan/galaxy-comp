@@ -1,0 +1,94 @@
+/* Profile.css */
+
+.profile {
+height:fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 3rem;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.profile-picture {
+  text-align: center;
+}
+
+.profile-image img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 1rem;
+}
+
+.profile-identity {
+  flex: 1;
+}
+
+.identity-input {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.identity-item {
+  text-align: left;
+  display:block;
+  flex-direction: column;
+}
+
+label {
+  text-align: left;
+  font-weight: bold;
+}
+
+input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.identity-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.identity-label {
+  font-weight: bold;
+}
+
+.identity-value {
+  font-size: 16px;
+}
+
+.profile-actions button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s;
+}
+
+.profile-actions button:hover {
+  background-color: #0056b3;
+}
+
+.spann {
+    display: inline-block;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #ffffff;
+    font-size: 16px;
+    margin-top: 5px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
