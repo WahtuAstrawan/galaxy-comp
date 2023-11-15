@@ -14,7 +14,7 @@ function About() {
             <img
               src={logo}
               alt="galaxycomp-logo"
-              className="img-fluid"
+              className="mx-24"
               style={{ width:"300px", height:"300px" }}
             />
           </Col>

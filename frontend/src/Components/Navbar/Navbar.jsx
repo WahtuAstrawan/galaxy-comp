@@ -21,9 +21,9 @@ function NavbarLandingPage() {
         <Navbar 
             style={{ backgroundColor:'#24262b', fontWeight:"bold"}}
         >
-          <NavbarBrand style={{ color:"white", fontSize:"28px", marginRight:"3rem"}}>
-            <img src={logoComp} alt="logo" style={{ width:"50px", height:"50px", marginRight:"10px" }}/>
-            Galaxy Comp
+          <NavbarBrand style={{ color:"white", fontSize:"28px", marginRight:"3rem", display:"flex"}}>
+            <img src={logoComp} alt="logo" className='w-20 h-20'/>
+            <p className='mt-3 ml-3'>Galaxy Comp</p>
           </NavbarBrand>
           <Nav className='me-auto' id='normal-navbar'>
             <NavLink href='#about-section' style={{ color:"white", width:"9rem" }}><h6>About Us</h6></NavLink>
