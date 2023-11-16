@@ -1,6 +1,6 @@
-import sequelize from "../config/database";
+import sequelize from "../config/database.js";
 import { DataTypes } from "sequelize";
-import DetailTransaction from "./DetailTransaction";
+import DetailTransaction from "./DetailTransaction.js";
 
 const Transaction = sequelize.define('transaction', {
     transactionID:{
@@ -8,14 +8,6 @@ const Transaction = sequelize.define('transaction', {
         autoIncrement: true,
         primaryKey: true,
         allowNull: false,
-    },
-    userID:{
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: 'user',
-            key: 'userID',
-        },
     },
     transactionDate:{
         type: DataTypes.DATE,
@@ -42,13 +34,12 @@ const Transaction = sequelize.define('transaction', {
     changes:{
         type: DataTypes.DECIMAL(10, 2),
     },
+},{
+    tableName: 'transaction'
 });
 
-Transaction.hasMany(DetailTransaction, {
-    foreignKey: 'transactionID'
-});
+Transaction.hasMany(DetailTransaction);
 
 DetailTransaction.belongsTo(Transaction);
 
-Transaction.sync();
 export default Transaction;

@@ -1,6 +1,6 @@
-import sequelize from "../config/database";
+import sequelize from "../config/database.js";
 import { DataTypes } from "sequelize";
-import DetailTransaction from "./DetailTransaction";
+import DetailTransaction from "./DetailTransaction.js";
 
 const Product = sequelize.define('product', {
     productID:{
@@ -42,13 +42,12 @@ const Product = sequelize.define('product', {
     productImg:{
         type: DataTypes.BLOB('long')
     }
+},{
+    tableName: 'product'
 });
 
-Product.hasMany(DetailTransaction, {
-    foreignKey: 'productID'
-});
+Product.hasMany(DetailTransaction);
 
 DetailTransaction.belongsTo(Product);
 
-Product.sync();
 export default Product;

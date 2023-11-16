@@ -1,8 +1,11 @@
 import express from 'express';
 import cors from 'cors';
 import session from 'express-session';
-import {uuid4} from 'uuid';
-import sequelize from './config/database';
+import sequelize from './config/database.js';
+import Employee from './models/Employee.js';
+import Product from './models/Product.js';
+import Transaction from './models/Transaction.js';
+import DetailTransaction from './models/DetailTransaction.js';
 
 const app = express();
 const port = 8080;
@@ -13,7 +16,15 @@ try {
     await sequelize.authenticate();
     console.log("Database berhasil terhubung!");
 } catch (error) {
-    console.error("Tidak dapat terhubung ke database", error);
+    console.log(`Tidak dapat terhubung ke database error : ${error}`);
+}
+
+
+try {
+    await sequelize.sync();
+    console.log("Database disinkronkan!");
+} catch (error) {
+    console.log(`Gagal menyingkronkan database error : ${error}`);
 }
 
 app.listen(port, () => {

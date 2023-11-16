@@ -1,9 +1,9 @@
-import sequelize from "../config/database";
+import sequelize from "../config/database.js";
 import { DataTypes } from "sequelize";
-import Transaction from "./Transaction";
+import Transaction from "./Transaction.js";
 
-const User = sequelize.define('user', {
-    userID:{
+const Employee = sequelize.define('employee', {
+    employeeID:{
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
@@ -39,14 +39,13 @@ const User = sequelize.define('user', {
     },
     profileImg:{
         type: DataTypes.BLOB('long')
-    }
+    }},
+    {
+    tableName: 'employee'
 });
 
-User.hasMany(Transaction, {
-    foreignKey: 'userID'
-});
+Employee.hasMany(Transaction);
 
-Transaction.belongsTo(User);
+Transaction.belongsTo(Employee);
 
-User.sync();
-export default User;
+export default Employee;
