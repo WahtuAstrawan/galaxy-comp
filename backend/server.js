@@ -1,11 +1,13 @@
 import express from 'express';
 import cors from 'cors';
 import session from 'express-session';
+
 import sequelize from './config/database.js';
-import Employee from './models/Employee.js';
 import Product from './models/Product.js';
 import Transaction from './models/Transaction.js';
 import DetailTransaction from './models/DetailTransaction.js';
+
+import EmployeeRouter from './routes/Employee.js';
 
 const app = express();
 const port = 8080;
@@ -19,7 +21,6 @@ try {
     console.log(`Tidak dapat terhubung ke database error : ${error}`);
 }
 
-
 try {
     await sequelize.sync();
     console.log("Database disinkronkan!");
@@ -30,5 +31,7 @@ try {
 app.listen(port, () => {
     console.log(`Server berjalan di: http://localhost:${port}`);
 })
+
+app.use("/employee", EmployeeRouter);
 
 export default app;

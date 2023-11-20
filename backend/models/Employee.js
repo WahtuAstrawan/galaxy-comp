@@ -16,10 +16,16 @@ const Employee = sequelize.define('employee', {
     email:{
         type: DataTypes.STRING,
         allowNull:false,
+        validate:{
+            isEmail: true
+        }
     },
     telephone:{
         type: DataTypes.STRING(15),
         allowNull: false,
+        validate:{
+            isNumeric: true
+        }
     },
     username:{
         type: DataTypes.STRING(30),
@@ -38,7 +44,7 @@ const Employee = sequelize.define('employee', {
         type: DataTypes.TEXT,
     },
     profileImg:{
-        type: DataTypes.BLOB('long')
+        type: DataTypes.BLOB('long'),
     }},
     {
     tableName: 'employee'

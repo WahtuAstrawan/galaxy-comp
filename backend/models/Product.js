@@ -36,7 +36,7 @@ const Product = sequelize.define('product', {
     },
     category:{
         type: DataTypes.ENUM,
-        values: ['monitor', 'CPU', 'keyboard', 'mouse', 'printer', 'harddisk', 'speaker', 'laptop', 'headset'],
+        values: ['monitor', 'CPU', 'keyboard', 'mouse', 'printer', 'harddisk', 'speaker', 'laptop', 'headset', 'lainnya'],
         allowNull: false,
     },
     productImg:{
