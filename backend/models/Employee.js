@@ -44,7 +44,7 @@ const Employee = sequelize.define('employee', {
         type: DataTypes.TEXT,
     },
     profileImg:{
-        type: DataTypes.BLOB('long'),
+        type: DataTypes.STRING,
     }},
     {
     tableName: 'employee'

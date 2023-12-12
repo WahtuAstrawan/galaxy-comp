@@ -3,7 +3,7 @@ import Employee from "../models/Employee.js";
 export const viewEmployee = async (req, res) => {
     try {
         const employees = await Employee.findAll();
-        return res.status(200).json({success: true, message:"Success to Fetch All Employee Data",employees});
+        return res.status(200).json({success: true, message:"Success to Fetch All Employee Data", data:employees});
 
     } catch (error) {
         console.error(error);
@@ -92,7 +92,7 @@ export const editEmployee = async (req, res) => {
             }
         });
 
-        return res.status(200).json({success: true, message: "An Employee Account Successfully edited"});
+        return res.status(200).json({success: true, message: `An Employee Account with ID : ${id} Successfully edited`});
 
     } catch (error) {
         console.error(error);
@@ -110,7 +110,7 @@ export const destroyEmployee = async (req, res) => {
             }
         });
 
-        return res.status(200).json({success: true, message: "An Employee Account Successfully deleted"});
+        return res.status(200).json({success: true, message: `An Employee Account with ID : ${id} Successfully deleted`});
 
     } catch (error) {
         console.error(error);

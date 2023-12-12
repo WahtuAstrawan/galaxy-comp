@@ -1,18 +1,27 @@
 import express from 'express';
 import cors from 'cors';
 import session from 'express-session';
+import { v4 as uuidv4} from 'uuid';
 
 import sequelize from './config/database.js';
-import Product from './models/Product.js';
-import Transaction from './models/Transaction.js';
-import DetailTransaction from './models/DetailTransaction.js';
 
 import EmployeeRouter from './routes/Employee.js';
+import ProductRouter from './routes/Product.js';
+import DashboardRouter from './routes/Dashboard.js';
+import TransactionRouter from './routes/Transaction.js';
 
 const app = express();
 const port = 8080;
+
 app.use(cors());
 app.use(express.json());
+app.use(
+    session({
+        secret: uuidv4(),
+        resave: false,
+        saveUninitialized: true,
+    })
+);
 
 try {
     await sequelize.authenticate();
@@ -33,5 +42,8 @@ app.listen(port, () => {
 })
 
 app.use("/employee", EmployeeRouter);
+app.use("/product", ProductRouter);
+app.use("/dashboard", DashboardRouter);
+app.use("/transaction", TransactionRouter)
 
 export default app;

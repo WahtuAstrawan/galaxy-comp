@@ -40,7 +40,7 @@ const Product = sequelize.define('product', {
         allowNull: false,
     },
     productImg:{
-        type: DataTypes.BLOB('long')
+        type: DataTypes.STRING
     }
 },{
     tableName: 'product'
