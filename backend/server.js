@@ -9,6 +9,7 @@ import EmployeeRouter from './routes/Employee.js';
 import ProductRouter from './routes/Product.js';
 import DashboardRouter from './routes/Dashboard.js';
 import TransactionRouter from './routes/Transaction.js';
+import LoginRouter from './routes/Login.js';
 
 const app = express();
 const port = 8080;
@@ -44,6 +45,7 @@ app.listen(port, () => {
 app.use("/employee", EmployeeRouter);
 app.use("/product", ProductRouter);
 app.use("/dashboard", DashboardRouter);
-app.use("/transaction", TransactionRouter)
+app.use("/transaction", TransactionRouter);
+app.use("/login", LoginRouter);
 
 export default app;

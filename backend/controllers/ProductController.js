@@ -1,3 +1,4 @@
+import { Op } from "sequelize";
 import Product from "../models/Product.js";
 
 export const viewProduct = async (req, res) => {
@@ -101,3 +102,33 @@ export const destroyProduct = async (req, res) => {
         return res.status(500).json({success: false, message:`${error}`});
     }
 }
+
+export const filterProduct = async (req, res) => {
+    try {
+        const search = req.query.search || "";
+        const sortby = req.query.sortby || "name";
+        const order = req.query.order || "ASC";
+
+        const filteredProducts = await Product.findAll({
+            where: {
+                [Op.or]: [
+                    { name: { [Op.like]: `%${search}%` } },
+                    { stock: { [Op.like]: `%${search}%` } },
+                    { desc: { [Op.like]: `%${search}%` } },
+                    { sellPrice: { [Op.like]: `%${search}%` } },
+                    { qtySold: { [Op.like]: `%${search}%` } },
+                    { category: { [Op.like]: `%${search}%` } },
+                ]
+            },
+            order: [
+                [`${sortby}`, `${order}`]
+            ],
+        });
+
+        return res.status(200).json({ success: true, message: "Successfully Filtered/Search Products", data: filteredProducts });
+        
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ success: false, message: `${error}` });    
+    }
+};
