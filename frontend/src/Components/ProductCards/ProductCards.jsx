@@ -28,14 +28,15 @@ function ProductCards() {
       <div className='card-list-horizontal'>
         {Array(10).fill(0).map((_, index) => (
           <Card key={index} style={{ width: '18rem', marginRight: '8px' }}>
-            <a onClick={toggle} className='card' style={{ textDecoration:"none" }}>
               <CardBody>
                 <CardTitle tag="h5">{cardData[0].title}</CardTitle>
                 <CardSubtitle className="mb-2 text-muted" tag="h6">
                   {cardData[0].category}
                 </CardSubtitle>
               </CardBody>
-              <img alt="card-img" src={cardData[0].imageSrc} width="100%" />
+              <a onClick={toggle} style={{ textDecoration:"none", alignContent:"center", margin:"0"}}>
+                <img alt="card-img" src={cardData[0].imageSrc} width="100%" />
+              </a>
               <CardBody>
                 <CardText style={{ textAlign: 'justify', overflow: 'hidden' }}>
                   <p>{cardData[0].description}</p>
@@ -46,28 +47,27 @@ function ProductCards() {
                   Stock : {cardData[0].stock} Unit
                 </CardText>
               </CardBody>
-            </a>
           </Card>
         ))}
-        <Modal isOpen={modal} toggle={toggle}>
-              <ModalHeader toggle={toggle}>{cardData[0].title}</ModalHeader>
-              <ModalBody>
-                <div>
-                  <img src={keyboard} alt="product-img" width="100%"/>
-                  <br />
-                  Product Description :
-                  <br />
-                  <p style={{ textAlign:"justify" }}>{cardData[0].description}</p>
-                  Price : Rp.{cardData[0].price}
-                  <br />
-                  Stock : {cardData[0].stock} Unit
-                </div>
-              </ModalBody>
-              <ModalFooter>
-                  <Button color="secondary" onClick={toggle}>
-                    Close
-                  </Button>
-              </ModalFooter>
+          <Modal isOpen={modal} toggle={toggle}>
+                <ModalHeader toggle={toggle}>{cardData[0].title}</ModalHeader>
+                <ModalBody>
+                  <div>
+                    <img src={keyboard} alt="product-img" width="100%"/>
+                    <br />
+                    Product Description :
+                    <br />
+                    <p style={{ textAlign:"justify" }}>{cardData[0].description}</p>
+                    Price : Rp.{cardData[0].price}
+                    <br />
+                    Stock : {cardData[0].stock} Unit
+                  </div>
+                </ModalBody>
+                <ModalFooter>
+                    <Button color="secondary" onClick={toggle}>
+                      Close
+                    </Button>
+                </ModalFooter>
             </Modal>
       </div>
     </>

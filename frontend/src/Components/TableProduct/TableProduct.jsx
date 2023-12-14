@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Table, Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import { UilEye } from '@iconscout/react-unicons';
+import { Table, Button, Modal, ModalHeader, ModalBody, ModalFooter, InputGroup, Input, Pagination, PaginationItem, PaginationLink } from 'reactstrap';
+import { UilEye, UilSearch } from '@iconscout/react-unicons';
 import mouse from './mouse.jpg';
 import './TableProduct.css'
 
@@ -30,7 +30,12 @@ function TableProduct() {
                 <h1>Product List</h1>
             </div>
             <div className="search-filter">
-
+                <InputGroup>
+                    <Input placeholder="Search..." style={{ border:"1px solid grey" }}/>
+                    <Button color="primary" style={{ width:"5rem" }}>
+                        <UilSearch></UilSearch>
+                    </Button>
+                </InputGroup>
             </div>
             <Table className='table-info' style={{ width: "100%" }}>
                 <thead>
@@ -60,6 +65,68 @@ function TableProduct() {
                     ))}
                 </tbody>
             </Table>
+            <div className="pagination-section" color='info'>
+                <Pagination style={{ display:"flex", justifyContent:"center" }}>
+                <PaginationItem>
+                    <PaginationLink
+                    first
+                    href="#"
+                    >
+                        First
+                    </PaginationLink>
+                </PaginationItem>
+                <PaginationItem>
+                    <PaginationLink
+                    href="#"
+                    previous
+                    >
+                        Previous
+                    </PaginationLink>
+                </PaginationItem>
+                <PaginationItem>
+                    <PaginationLink href="#">
+                    1
+                    </PaginationLink>
+                </PaginationItem>
+                <PaginationItem>
+                    <PaginationLink href="#">
+                    2
+                    </PaginationLink>
+                </PaginationItem>
+                <PaginationItem>
+                    <PaginationLink href="#">
+                    3
+                    </PaginationLink>
+                </PaginationItem>
+                <PaginationItem>
+                    <PaginationLink href="#">
+                    4
+                    </PaginationLink>
+                </PaginationItem>
+                <PaginationItem>
+                    <PaginationLink href="#">
+                    5
+                    </PaginationLink>
+                </PaginationItem>
+                <PaginationItem>
+                    <PaginationLink
+                    href="#"
+                    next
+                    >
+                        Next
+                    </PaginationLink>
+                </PaginationItem>
+                <PaginationItem>
+                    <PaginationLink
+                    href="#"
+                    last
+                    >
+                        Last
+                    </PaginationLink>
+                </PaginationItem>
+                </Pagination>
+            </div>
+
             <Modal isOpen={modal} toggle={() => toggle(selectedProduct)}>
                 <ModalHeader toggle={() => toggle(selectedProduct)}>
                     {selectedProduct ? selectedProduct.name : ''}
