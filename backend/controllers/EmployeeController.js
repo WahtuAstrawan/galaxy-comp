@@ -1,5 +1,6 @@
 import Employee from "../models/Employee.js";
 import bcrypt from "bcrypt";
+import { Op } from "sequelize";
 
 export const viewEmployee = async (req, res) => {
     try {
@@ -140,29 +141,36 @@ export const destroyEmployee = async (req, res) => {
 export const filterEmployee = async (req, res) => {
     try {
         const search = req.query.search || "";
-        const sortby = req.query.sortby || "fullName";
-        const order = req.query.order || "ASC";
+        const sortby = req.query.sortby || "updatedAt";
+        const order = req.query.order || "DESC";
+        const role = req.query.role || null;
+        const page = req.query.page || 1;
 
-        const filteredEmployees = await Employee.findAll({
+        let filteredEmployees = await Employee.findAll({
             where: {
                 [Op.or]: [
-                    { fullName: { [Op.like]: `%${search}%` } },
-                    { email: { [Op.like]: `%${search}%` } },
-                    { telephone: { [Op.like]: `%${search}%` } },
-                    { username: { [Op.like]: `%${search}%` } },
-                    { role: { [Op.like]: `%${search}%` } },
-                    { address: { [Op.like]: `%${search}%` } },
+                    { fullName: { [Op.iLike]: `%${search}%` } },
+                    { email: { [Op.iLike]: `%${search}%` } },
+                    { telephone: { [Op.iLike]: `%${search}%` } },
+                    { username: { [Op.iLike]: `%${search}%` } },
+                    { address: { [Op.iLike]: `%${search}%` } },
                 ]
             },
             order: [
-                [`${sortby}`, `${order}`]
+                [sortby, order]
             ],
+            offset: 10 * (parseInt(page) - 1),
+            limit: 10
         });
 
-        return res.status(200).json({ success: true, message: "Successfully Filtered/Search Employee", data: filteredEmployees });
+        if(role){
+            filteredEmployees = filteredEmployees.filter(employee => employee.role === role);
+        }
+
+        return res.status(200).json({ success: true, message: "Successfully Filtered Employees", data: filteredEmployees });
         
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ success: false, message: `${error}` });    
+        return res.status(500).json({ success: false, message: `${error}` });
     }
 };

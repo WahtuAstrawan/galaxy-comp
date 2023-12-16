@@ -1,19 +1,18 @@
 import './App.css';
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 
-import LoginPage from './pages/LoginPage/LoginPage'
-import AdminPage from './pages/AdminPage/AdminPage'
-import LandingPage from './pages/LandingPage/LandingPage'
-import NoPage from './pages/NoPage/NoPage'
-import AdminProductPage from './pages/AdminProductPage/AdminProductPage';
-import AdminHistoryPage from './pages/AdminHistoryPage/AdminHistoryPage';
-import AdminAccountPage from './pages/AdminAccountPage/AdminAccountPage';
-import AdminProfilePage from './pages/AdminProfilePage/AdminProfilePage';
-import AdminTransPage from './pages/AdminTransPage/AdminTransPage';
+import LoginPage from './pages/LoginPage/LoginPage.jsx'
+import AdminPage from './pages/AdminPage/AdminPage.jsx'
+import LandingPage from './pages/LandingPage/LandingPage.jsx'
+import NoPage from './pages/NoPage/NoPage.jsx'
+import AdminProductPage from './pages/AdminProductPage/AdminProductPage.jsx';
+import AdminHistoryPage from './pages/AdminHistoryPage/AdminHistoryPage.jsx';
+import AdminAccountPage from './pages/AdminAccountPage/AdminAccountPage.jsx';
+import AdminProfilePage from './pages/AdminProfilePage/AdminProfilePage.jsx';
+import AdminTransPage from './pages/AdminTransPage/AdminTransPage.jsx';
 
 function App() {
   return (
-    <div className="App">
       <BrowserRouter>
         <Routes>
           <Route index element={<LandingPage/>}/>
@@ -27,7 +26,6 @@ function App() {
           <Route path='*' element={<NoPage/>}/>
         </Routes>
       </BrowserRouter>
-    </div>
   );
 }
 

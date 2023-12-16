@@ -19,7 +19,6 @@ const DetailTransaction = sequelize.define('detail_transaction', {
 },
 {
     tableName: 'detail_transaction',
-    timestamps: false
 });
 
 export default DetailTransaction;

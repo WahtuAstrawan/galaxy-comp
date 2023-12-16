@@ -106,26 +106,33 @@ export const destroyProduct = async (req, res) => {
 export const filterProduct = async (req, res) => {
     try {
         const search = req.query.search || "";
-        const sortby = req.query.sortby || "name";
-        const order = req.query.order || "ASC";
+        const sortby = req.query.sortby || "updatedAt";
+        const order = req.query.order || "DESC";
+        const category = req.query.category || null;
+        const page = req.query.page || 1;
 
-        const filteredProducts = await Product.findAll({
+        let filteredProducts = await Product.findAll({
             where: {
                 [Op.or]: [
-                    { name: { [Op.like]: `%${search}%` } },
-                    { stock: { [Op.like]: `%${search}%` } },
-                    { desc: { [Op.like]: `%${search}%` } },
-                    { sellPrice: { [Op.like]: `%${search}%` } },
-                    { qtySold: { [Op.like]: `%${search}%` } },
-                    { category: { [Op.like]: `%${search}%` } },
+                    { name: { [Op.iLike]: `%${search}%` } },
+                    { stock: { [Op.gte]: !isNaN(parseInt(search)) ? parseInt(search) : null } },
+                    { desc: { [Op.iLike]: `%${search}%` } },
+                    { sellPrice: { [Op.gte]: !isNaN(parseInt(search)) ? parseInt(search) : null } },
+                    { qtySold: { [Op.gte]: !isNaN(parseInt(search)) ? parseInt(search) : null } },
                 ]
             },
             order: [
-                [`${sortby}`, `${order}`]
+                [sortby, order]
             ],
+            offset: 10 * (parseInt(page) - 1),
+            limit: 10
         });
 
-        return res.status(200).json({ success: true, message: "Successfully Filtered/Search Products", data: filteredProducts });
+        if(category){
+            filteredProducts = filteredProducts.filter(product => product.category === category);
+        }
+        
+        return res.status(200).json({ success: true, message: "Successfully Filtered Products", data: filteredProducts });
         
     } catch (error) {
         console.error(error);

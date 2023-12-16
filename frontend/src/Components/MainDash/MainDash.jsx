@@ -1,6 +1,6 @@
 import React from 'react'
 import './MainDash.css'
-import Cards from '../Cards/Cards'
+import Cards from '../Cards/Cards.jsx'
 
 
 const MainDash = () => {

@@ -1,7 +1,5 @@
 import express from 'express';
 import cors from 'cors';
-import session from 'express-session';
-import { v4 as uuidv4} from 'uuid';
 
 import sequelize from './config/database.js';
 
@@ -16,13 +14,6 @@ const port = 8080;
 
 app.use(cors());
 app.use(express.json());
-app.use(
-    session({
-        secret: uuidv4(),
-        resave: false,
-        saveUninitialized: true,
-    })
-);
 
 try {
     await sequelize.authenticate();

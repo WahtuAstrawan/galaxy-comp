@@ -1,6 +1,7 @@
 import DetailTransaction from "../models/DetailTransaction.js";
 import Transaction from "../models/Transaction.js";
 import Product from "../models/Product.js";
+import { Op } from "sequelize";
 
 export const viewTransaction = async (req, res) => {
     try {
@@ -80,26 +81,32 @@ export const filterTransaction = async (req, res) => {
     try {
         const search = req.query.search || "";
         const sortby = req.query.sortby || "transactionDate";
-        const order = req.query.order || "ASC";
+        const order = req.query.order || "DESC";
+        const payMethod = req.query.payMethod || null;
+        const page = req.query.page || 1;
 
-        const filteredTransactions = await Transaction.findAll({
+        let filteredTransactions = await Transaction.findAll({
             where: {
                 [Op.or]: [
-                    { transactionDate: { [Op.like]: `%${search}%` } },
-                    { customerName: { [Op.like]: `%${search}%` } },
-                    { totalPrice: { [Op.like]: `%${search}%` } },
-                    { payMethod: { [Op.like]: `%${search}%` } },
-                    { totalPay: { [Op.like]: `%${search}%` } },
-                    { changes: { [Op.like]: `%${search}%` } },
+                    { customerName: { [Op.iLike]: `%${search}%` } },
+                    { totalPrice: { [Op.gte]: !isNaN(parseInt(search)) ? parseInt(search) : null } },
+                    { totalPay: { [Op.gte]: !isNaN(parseInt(search)) ? parseInt(search) : null } },
+                    { changes: { [Op.gte]: !isNaN(parseInt(search)) ? parseInt(search) : null } },
                 ]
             },
             order: [
-                [`${sortby}`, `${order}`]
+                [sortby, order]
             ],
             include: [{model: DetailTransaction}],
+            offset: 10 * (parseInt(page) - 1),
+            limit: 10
         });
 
-        return res.status(200).json({ success: true, message: "Successfully Filtered/Search Transactions", data: filteredTransactions });
+        if(payMethod){
+            filteredTransactions = filteredTransactions.filter(transaction => transaction.payMethod === payMethod);
+        }
+
+        return res.status(200).json({ success: true, message: "Successfully Filtered Transactions", data: filteredTransactions });
         
     } catch (error) {
         console.error(error);
