@@ -26,15 +26,15 @@ export const addEmployee = async (req, res) => {
         }});
 
         if(checkEmail){
-            return res.status(400).json({success: false, message: "Email is already used"});
+            return res.status(200).json({success: false, message: "Email is already used"});
         }
 
         if(checkUsername){
-            return res.status(400).json({success: false, message: "Username is already used"});
+            return res.status(200).json({success: false, message: "Username is already used"});
         }
 
         if(password.length > 50){
-            return res.status(400).json({success: false, message: "The password must be a maximum of 50 characters"});
+            return res.status(200).json({success: false, message: "The password must be a maximum of 50 characters"});
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -78,15 +78,15 @@ export const editEmployee = async (req, res) => {
         }});
 
         if(checkEmail && prevEmployee.email != email){
-            return res.status(400).json({success: false, message: "Email is already used"});
+            return res.status(200).json({success: false, message: "Email is already used"});
         }
 
         if(checkUsername && prevEmployee.username != username){
-            return res.status(400).json({success: false, message: "Username is already used"});
+            return res.status(200).json({success: false, message: "Username is already used"});
         }
 
         if(password.length > 50 && password.length != 60){
-            return res.status(400).json({success: false, message: "The password must be a maximum of 50 characters"});
+            return res.status(200).json({success: false, message: "The password must be a maximum of 50 characters"});
         }
 
         let hashedPassword;

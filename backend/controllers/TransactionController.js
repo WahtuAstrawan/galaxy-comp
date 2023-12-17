@@ -22,7 +22,7 @@ export const addTransaction = async (req, res) => {
         
 
         if(totalPrice > totalPay){
-            return res.status(400).json({success: false, message: "Total Pay can not set below the Total Price"});
+            return res.status(200).json({success: false, message: "Total Pay can not set below the Total Price"});
         }
 
         const addedTransaction = await Transaction.create({

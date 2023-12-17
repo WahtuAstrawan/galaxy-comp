@@ -17,15 +17,15 @@ export const addProduct = async (req, res) => {
         const { name, stock, desc, basePrice, sellPrice, category, productImg } = req.body;
 
         if(stock < 0){
-            return res.status(400).json({success: false, message: "Stock cant be set below zero"});
+            return res.status(200).json({success: false, message: "Stock cant be set below zero"});
         }
 
         if(basePrice < 0){
-            return res.status(400).json({success: false, message: "Base Price cant be set below zero"});
+            return res.status(200).json({success: false, message: "Base Price cant be set below zero"});
         }
 
         if(sellPrice < 0){
-            return res.status(400).json({success: false, message: "Sell Price cant be set below zero"});
+            return res.status(200).json({success: false, message: "Sell Price cant be set below zero"});
         }
 
         await Product.create({
@@ -52,15 +52,15 @@ export const editProduct = async (req, res) => {
         const { name, stock, desc, basePrice, sellPrice, category, productImg } = req.body;
 
         if(stock < 0){
-            return res.status(400).json({success: false, message: "Stock cant be set below zero"});
+            return res.status(200).json({success: false, message: "Stock cant be set below zero"});
         }
 
         if(basePrice < 0){
-            return res.status(400).json({success: false, message: "Base Price cant be set below zero"});
+            return res.status(200).json({success: false, message: "Base Price cant be set below zero"});
         }
 
         if(sellPrice < 0 || sellPrice < basePrice){
-            return res.status(400).json({success: false, message: "Sell Price cant be set below zero or below Base Price"});
+            return res.status(200).json({success: false, message: "Sell Price cant be set below zero or below Base Price"});
         }
 
         await Product.update({
