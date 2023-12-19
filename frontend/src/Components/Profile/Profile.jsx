@@ -3,9 +3,9 @@ import './Profile.css';
 import image from './admin.jpg';
 
 const tableData = [
-    {
-        image: image,
-    },
+  {
+    image: image,
+  },
 ];
 
 function Profile() {
@@ -15,21 +15,20 @@ function Profile() {
   const [username, setUsername] = useState('johndoe123');
   const [phone, setPhone] = useState('555-555-5555');
   const [email, setEmail] = useState('johndoe@example.com');
-//   const handleEdit = () => {
-//     setIsEditing(!isEditing); // Mengganti status edit
-//   };
 
-//   const handleSave = () => {
-//     setIsEditing(false);
-//     // Di sini Anda dapat menambahkan logika untuk menyimpan perubahan ke server atau penyimpanan lokal.
-//   };
+  const handleEdit = () => {
+    setIsEditing(!isEditing);
+  };
 
+  const handleSave = () => {
+    setIsEditing(false);
+    // Di sini Anda dapat menambahkan logika untuk menyimpan perubahan ke server atau penyimpanan lokal.
+  };
 
   return (
     <div className="profile">
       <div className="profile-identity">
         {isEditing ? (
-            
           <div className="identity-input">
             <div className="identity-item">
               <label htmlFor="name">Name:</label>
@@ -76,35 +75,35 @@ function Profile() {
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
-            <button>Save</button>
+            <button className='savebutton' onClick={handleSave}>Save</button>
           </div>
         ) : (
-            <div className="identity-input">
+          <div className="identity-input">
             <div className="profile-image">
-                <img src={image} alt="admin" />
+              <img src={image} alt="admin" />
             </div>
             <div className="identity-item">
               <label htmlFor="name">Name:</label>
-              <span className='spann'>{name}</span>
+              <span className="spann">{name}</span>
             </div>
             <div className="identity-item">
               <label htmlFor="address">Address:</label>
-              <span className='spann'>{address}</span>
+              <span className="spann">{address}</span>
             </div>
             <div className="identity-item">
               <label htmlFor="username">Username:</label>
-              <span className='spann'>{username}</span>
+              <span className="spann">{username}</span>
             </div>
             <div className="identity-item">
               <label htmlFor="phone">Phone:</label>
-              <span className='spann'>{phone}</span>
+              <span className="spann">{phone}</span>
             </div>
             <div className="identity-item">
               <label htmlFor="email">Email:</label>
-              <span className='spann'>{email}</span>
+              <span className="spann">{email}</span>
             </div>
             <div className="profile-actions">
-                <button>Edit</button>
+              <button onClick={handleEdit}>Edit</button>
             </div>
           </div>
         )}

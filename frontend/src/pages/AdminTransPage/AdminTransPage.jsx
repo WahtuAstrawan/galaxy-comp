@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet"
 import './AdminTransPage.css'
 import Transaction from '../../Components/Transaction/Transaction';
 import NavTrans from '../../Components/NavTrans/NavTrans';
-import Products from '../../Components/Products/Products';
+import TableProductTrans from '../../Components/TableProductTrans/TableProductTrans';
 import Cart from '../../Components/Cart/Cart';
 
 
@@ -21,12 +21,10 @@ function AdminTransPage() {
             </Helmet>
             <div className="navtr"><NavTrans/></div>
             <Sidebar/>
-            <div className="list"><Products/></div>
+            <div className="list"><TableProductTrans/></div>
             <div className="cartp"><Cart/></div>
             
-            <div className="transMain">
-                <Transaction/>
-            </div>
+           
         </>
     )
 }
