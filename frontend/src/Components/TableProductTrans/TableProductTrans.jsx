@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Table, Button, Modal, ModalHeader, ModalBody, ModalFooter, Pagination, PaginationItem, PaginationLink } from 'reactstrap';
-import { UilEye, UilEdit, UilTrashAlt } from '@iconscout/react-unicons';
+import { UilEye, UilPlus } from '@iconscout/react-unicons';
 import mouse from './mouse.jpg';
-import './TableProduct3.css';
+import './TableProductTrans.css';
 
 const tableData = [
   {
@@ -20,6 +20,7 @@ function TableProduct3() {
   const [deleteModal, setDeleteModal] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [editedProduct, setEditedProduct] = useState(null);
+  const [cartItems, setCartItems] = useState([]); // State untuk menyimpan produk di keranjang
 
   const toggle = (product) => {
     setSelectedProduct(product);
@@ -38,16 +39,11 @@ function TableProduct3() {
     setEditedProduct(null);
   };
 
-  const handleCancelEdit = () => {
-    console.log('Cancel Edit button clicked');
-    setModal(false);
-    setEditedProduct(null);
-  };
-
-  const handleDelete = () => {
-    // Implement your delete logic here
-    console.log('Delete button clicked for product:', selectedProduct);
-    setDeleteModal(false);
+  const handleAddToCart = () => {
+    // Tambahkan produk ke keranjang
+    if (selectedProduct) {
+      setCartItems((prevItems) => [...prevItems, selectedProduct]);
+    }
   };
 
   const handleInputChange = (e) => {
@@ -87,11 +83,8 @@ function TableProduct3() {
                 </a>
               </td>
               <td>
-                <Button className="action2 edit" color="warning" onClick={() => toggle(tableData[0])}>
-                  <UilEdit></UilEdit>
-                </Button>
-                <Button className="action2 delete" color="danger" onClick={toggleDeleteModal}>
-                  <UilTrashAlt></UilTrashAlt>
+                <Button className="add" color="primary" onClick={() => { toggle(tableData[0]); handleAddToCart(); }}>
+                  <UilPlus></UilPlus>
                 </Button>
               </td>
             </tr>
@@ -100,7 +93,7 @@ function TableProduct3() {
       </Table>
 
       <div className="pagination-section2" color='info' style={{borderBottom: "none"}}>
-        <Pagination style={{ justifyContent: "center", margin: "20px 0", borderBottom: "none" }}>
+        <Pagination style={{ justifyContent: "center", margin: "20px 0", borderBottom:"none" }}>
           <PaginationItem style={{borderBottom: "none"}}>
             <PaginationLink first href="#">
               First
@@ -111,8 +104,8 @@ function TableProduct3() {
               Previous
             </PaginationLink>
           </PaginationItem>
-         
-          <PaginationItem style={{borderBottom: "none"}}>
+
+          <PaginationItem style={{borderBottom: "none"}}> 
             <PaginationLink next href="#">
               Next
             </PaginationLink>
@@ -149,35 +142,10 @@ function TableProduct3() {
             </div>
           ) : null}
         </ModalBody>
-        <ModalFooter>
-          <Button color="primary" onClick={handleSaveEdit}>
-            Save
-          </Button>
-          <Button color="secondary" onClick={handleCancelEdit}>
-            Cancel
-          </Button>
-        </ModalFooter>
-      </Modal>
-      <Modal isOpen={deleteModal} toggle={toggleDeleteModal}>
-        <ModalHeader toggle={toggleDeleteModal}>
-          {selectedProduct ? `Delete ${selectedProduct.name}` : ''}
-        </ModalHeader>
-        <ModalBody>
-          {selectedProduct ? (
-            <p>Apakah Anda yakin ingin menghapus produk "{selectedProduct.name}"?</p>
-          ) : null}
-        </ModalBody>
-        <ModalFooter>
-          <Button color="danger" onClick={handleDelete}>
-            Delete
-          </Button>
-          <Button color="secondary" onClick={toggleDeleteModal}>
-            Cancel
-          </Button>
-        </ModalFooter>
       </Modal>
     </div>
   );
 }
 
 export default TableProduct3;
+

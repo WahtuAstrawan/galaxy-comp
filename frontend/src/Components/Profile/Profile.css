@@ -21,6 +21,8 @@ height:fit-content;
   border-radius: 50%;
   object-fit: cover;
   margin-bottom: 1rem;
+  margin-left: 25rem;
+  align-items: center;
 }
 
 .profile-identity {
@@ -92,3 +94,46 @@ input {
     box-sizing: border-box;
 }
 
+.identity-input {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.identity-item {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+input {
+  padding: 8px;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.savebutton {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100px;
+  margin: 0 auto; /* Membuat tombol berada di tengah */
+  display: block; /* Mengubah tombol menjadi elemen blok */
+  margin-top: 10px; /* Jarak antara tombol dan input fields */
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+.spann {
+  margin-bottom: 10px;
+  display: inline-block;
+}

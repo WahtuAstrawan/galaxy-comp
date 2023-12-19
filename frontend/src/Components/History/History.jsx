@@ -1,5 +1,6 @@
 import React from 'react'
 import './History.css'
+import { Table, Button, Modal, ModalHeader, ModalBody, ModalFooter, Pagination, PaginationItem, PaginationLink } from 'reactstrap';
 
 
 const History = () => {
@@ -55,9 +56,35 @@ const History = () => {
           ))}
         </tbody>
       </table>
+      
+
+      <div className="pagination-section2" color='info' style={{borderBottom: "none"}}>
+        <Pagination style={{ justifyContent: "center", margin: "20px 0", borderBottom:"none" }}>
+          <PaginationItem style={{borderBottom: "none"}}>
+            <PaginationLink first href="#">
+              First
+            </PaginationLink>
+          </PaginationItem>
+          <PaginationItem style={{borderBottom: "none"}}>
+            <PaginationLink previous href="#">
+              Previous
+            </PaginationLink>
+          </PaginationItem>
+
+          <PaginationItem style={{borderBottom: "none"}}> 
+            <PaginationLink next href="#">
+              Next
+            </PaginationLink>
+          </PaginationItem>
+          <PaginationItem style={{borderBottom: "none"}}>
+            <PaginationLink last href="#">
+              Last
+            </PaginationLink>
+          </PaginationItem>
+        </Pagination>
+      </div>
     </div>
   );
 };
 
 export default History;
-Transaction

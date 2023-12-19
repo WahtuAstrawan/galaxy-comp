@@ -1,0 +1,90 @@
+/* Tambahkan gaya untuk tombol aksi */
+.action2 {
+    margin-right: 5px;
+    padding: 8px 12px;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+/* Gaya khusus untuk tombol Edit */
+.action2.edit {
+    background-color: #ffc107; /* Warna latar belakang untuk Edit */
+    color: #212529; /* Warna teks untuk Edit */
+}
+
+/* Gaya khusus untuk tombol Delete */
+.action2.delete {
+    background-color: #dc3545; /* Warna latar belakang untuk Delete */
+    color: #fff; /* Warna teks untuk Delete */
+}
+
+/* Hover effect untuk tombol aksi */
+.action2:hover {
+    opacity: 0.8;
+}
+
+/* Hover effect khusus untuk tombol Edit */
+.action2.edit:hover {
+    background-color: #ffb400; /* Warna latar belakang hover untuk Edit */
+}
+
+/* Hover effect khusus untuk tombol Delete */
+.action2.delete:hover {
+    background-color: #c82333; /* Warna latar belakang hover untuk Delete */
+}
+
+
+/* Tambahkan CSS ini ke dalam file TableProduct3.css atau file CSS terpisah yang Anda gunakan */
+
+/* CSS untuk membuat modal rata kiri */
+.modal-content {
+    text-align: left;
+  }
+  
+  /* CSS untuk mempercantik modal */
+  .modal-header {
+    background-color: #1eb4ff;
+    color: white;
+  }
+  
+  .modal-footer {
+    background-color: #f8f9fa;
+  }
+  
+  /* Gaya tambahan untuk memperindah tampilan input dan textarea */
+  .modal-body label {
+    font-weight: bold;
+  }
+  
+  .modal-body input,
+  .modal-body textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 12px;
+    box-sizing: border-box;
+  }
+  
+  /* Warna dan border pada tombol Save Edit */
+  .modal-footer .btn-primary {
+    background-color: #28a745;
+    border-color: #28a745;
+  }
+  
+  /* Warna tombol Cancel */
+  .modal-footer .btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+  }
+  
+  .action1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 0%; /* Sesuaikan tinggi dengan kebutuhan */
+}
+
+/* Hover effect untuk ikon */
+.action1:hover {
+    opacity: 0.8;
+}
