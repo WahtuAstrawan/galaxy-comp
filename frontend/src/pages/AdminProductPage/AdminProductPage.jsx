@@ -3,7 +3,7 @@ import Sidebar from "../../Components/Sidebar/Sidebar"
 import ProductCards from '../../Components/ProductCards/ProductCards';
 import { Helmet } from "react-helmet"
 import './AdminProductPage.css'
-import TableProduct2 from '../../Components/TableProduct2/TableProduct2';
+import TableProduct3 from '../../Components/TableProduct3/TableProduct3';
 import NavbarProduct from '../../Components/NavbarProduct/NavbarProduct';
 
 function AdminProductPage() {
@@ -19,7 +19,7 @@ function AdminProductPage() {
             <div className="navbarpr"><NavbarProduct/></div>
             <Sidebar/>
             <div className="productsMain">
-                <TableProduct2/>
+                <TableProduct3/>
             </div>
         </>
     )

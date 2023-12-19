@@ -43,6 +43,7 @@ a {
   .logo {
     width: 2rem; /* Ukuran logo juga diperkecil */
     height: 2rem;
+    
   }
 
   .sidebar .logo-container p {
@@ -72,7 +73,7 @@ a {
 .logo {
   width: 3rem;
   height: 3rem;
-  margin-left: 1rem;
+  margin-left: 3.5rem;
 }
 
 .sidebar .logo-container p {

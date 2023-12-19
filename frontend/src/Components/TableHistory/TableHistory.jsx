@@ -23,11 +23,22 @@ const tableData = [
 function TableHistory() {
     const [modal, setModal] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
+    const [deleteModal, setDeleteModal] = useState(false);
 
     const toggle = (product) => {
         setSelectedProduct(product);
         setModal(!modal);
     };
+
+    const toggleDeleteModal = () => {
+        setDeleteModal(!deleteModal);
+      };
+
+      const handleDelete = () => {
+        // Implement your delete logic here
+        console.log('Delete button clicked for product:', selectedProduct);
+        setDeleteModal(false);
+      };
 
     return (
         <div className='table-products-section'>
@@ -70,8 +81,8 @@ function TableHistory() {
                                 </a>
                             </td>
                             <td>
-                                <Button className="action2" color="danger">
-                                    <UilTrashAlt></UilTrashAlt> Delete
+                                <Button className="action2" color="danger" onClick={toggleDeleteModal}>
+                                    <UilTrashAlt></UilTrashAlt>
                                 </Button>
                             </td>
                         </tr>
@@ -100,6 +111,26 @@ function TableHistory() {
                     </Button>
                 </ModalFooter>
             </Modal>
+
+            <Modal isOpen={deleteModal} toggle={toggleDeleteModal}>
+                <ModalHeader toggle={toggleDeleteModal}>
+                    {selectedProduct ? `Delete ${selectedProduct.name}` : ''}
+                </ModalHeader>
+                <ModalBody>
+                    {selectedProduct ? (
+                    <p>Apakah Anda yakin ingin menghapus History ini?</p>
+                    ) : null}
+                </ModalBody>
+                <ModalFooter>
+                    <Button color="danger" onClick={handleDelete}>
+                        Delete
+                    </Button>
+                    <Button color="secondary" onClick={toggleDeleteModal}>
+                        Cancel
+                    </Button>
+                </ModalFooter>
+            </Modal>
+
         </div>
     )
 }
