@@ -1,24 +1,11 @@
-.dropdown-navbar{
-    width: 3rem;
-    height: 3rem;
-}
-
-.dropdown-navbar-menu:hover{
-    color: lightblue;
-}
-
-#normal-navbar h6:hover{
-    color: lightblue;
-}
-
-@media (max-width: 775px) {
-    #normal-navbar{
-        display: none;
-    }
-}
-
-@media (min-width: 775px) {
-    .dropdown-navbar{
-        display: none;
-    }
-}
+/* Styling CSS */
+.dropdown-menu {
+    width: 100%;
+  }
+  
+  .dropdown-menu.show {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: 0.1rem; /* Optional: Add a small margin */
+  }

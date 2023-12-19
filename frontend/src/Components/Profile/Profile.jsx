@@ -15,8 +15,6 @@ function Profile() {
   const [username, setUsername] = useState('johndoe123');
   const [phone, setPhone] = useState('555-555-5555');
   const [email, setEmail] = useState('johndoe@example.com');
-  const image = 'admin.jpg';
-
 //   const handleEdit = () => {
 //     setIsEditing(!isEditing); // Mengganti status edit
 //   };

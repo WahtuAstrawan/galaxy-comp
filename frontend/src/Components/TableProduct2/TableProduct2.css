@@ -3,13 +3,45 @@
     overflow-x: auto;
 }
 
-.action2 {
-    display:inline-flex;
-    margin: 3px;
+.titlebest {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight:500;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+    background-color: #aeebf8; /* Warna background yang sesuai */
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(31, 159, 251, 0.1);
+  }
+
+.pagination-section2 {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
 }
 
-.action1 {
-    margin-left: -5px;
+.pagination {
+    list-style: none;
+    display: flex;
+    padding: 0;
+    margin: 0;
+}
+
+.paginationItem {
+    margin: 0 5px;
+}
+
+.pagination-link {
+    text-decoration: none;
+    color: #007bff;
+}
+
+.pagination-link:hover {
+    color: #0056b3;
 }
 
 @media screen and (max-width: 600px) {
@@ -20,5 +52,4 @@
     .table-info table {
         width: 100%;
     }
-
 }

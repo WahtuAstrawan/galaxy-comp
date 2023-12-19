@@ -33,18 +33,18 @@ function NavbarLandingPage() {
           <UncontrolledDropdown className='dropdown-navbar'>
             <DropdownToggle color="light">
               <UilBars></UilBars>
+              <DropdownMenu className='dropdown-navbar-menu'>
+                <DropdownItem href='#about-section'>
+                  About Us
+                </DropdownItem>
+                <DropdownItem href='#products-section'>
+                  Products
+                </DropdownItem>
+                <DropdownItem href='#contact-section'>
+                  Contact
+                </DropdownItem>
+              </DropdownMenu>
             </DropdownToggle>
-            <DropdownMenu className='dropdown-navbar-menu'>
-              <DropdownItem href='#about-section'>
-                About Us
-              </DropdownItem>
-              <DropdownItem href='#products-section'>
-                Products
-              </DropdownItem>
-              <DropdownItem href='#contact-section'>
-                Contact
-              </DropdownItem>
-            </DropdownMenu>
           </UncontrolledDropdown>
         </Navbar>
       </div>
