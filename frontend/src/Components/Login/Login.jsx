@@ -1,33 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
-import { Link, useNavigate, useLocation } from 'react-router-dom';
 import './Login.css';
 import * as Unicons from '@iconscout/react-unicons';
-import useAuth from '../../hooks/useAuth.js';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
     useEffect(() =>{
         document.body.classList.add('bg-login');
+        localStorage.clear();
     }, []);
-
-    const { setAuth } = useAuth();
-
-    const navigate = useNavigate();
-    const location = useLocation();
-    const from = location.state?.from?.pathname || "/";
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
     const onSubmitForm = async (e) => {
+        e.preventDefault();
         try {
-            e.preventDefault();
             const response = await axios.post('http://localhost:8080/login', { username, password });
 
             if(response.data.success){
                 localStorage.setItem('token', response.data.token);
-                alert(response.data.message);
-                navigate(from, {replace: true});
+                const res = await axios.get('http://localhost:8080/login/role', {headers: {'auth' : response.data.token}});
+                const role = res.data.role === 'admin' ? '7134' : '4169';
+                localStorage.setItem('role', role);
+                navigate("/admin", {replace: true});
             }else{
                 alert(response.data.message);
             }

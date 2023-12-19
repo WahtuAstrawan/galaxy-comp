@@ -37,7 +37,7 @@ export const authLogin = async (req, res) => {
 
 export const verifyAuth = async (req, res, next) => {
     try {
-        const token = req.headers.authorization;
+        const token = req.headers.auth;
         if(token){
             jwt.verify(token, env.JWT_SECRET, (err, user) => {
                 if(err){
@@ -63,6 +63,26 @@ export const isAdmin = async (req, res, next) => {
         }
         
         next();
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({success: false, message: `${error}`});
+    }
+}
+
+export const getRole = async (req, res) => {
+    try {
+        const token = req.headers.auth;
+        if(token){
+            jwt.verify(token, env.JWT_SECRET, (err, user) => {
+                if(err){
+                    return res.status(200).json({success: false, message: "Token is not valid!"});
+                }
+
+                return res.status(200).json({success: true, role: user.role});
+            });
+        }else{
+            return res.status(200).json({success: false, message: "Warning, you are not authenticated!"});
+        }
     } catch (error) {
         console.error(error);
         return res.status(500).json({success: false, message: `${error}`});
