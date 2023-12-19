@@ -99,25 +99,25 @@ function TableProduct3() {
         </tbody>
       </Table>
 
-      <div className="pagination-section2" color='info'>
-        <Pagination style={{ justifyContent: "center", margin: "20px 0" }}>
-          <PaginationItem>
+      <div className="pagination-section2" color='info' style={{borderBottom: "none"}}>
+        <Pagination style={{ justifyContent: "center", margin: "20px 0", borderBottom: "none" }}>
+          <PaginationItem style={{borderBottom: "none"}}>
             <PaginationLink first href="#">
               First
             </PaginationLink>
           </PaginationItem>
-          <PaginationItem>
+          <PaginationItem style={{borderBottom: "none"}}>
             <PaginationLink previous href="#">
               Previous
             </PaginationLink>
           </PaginationItem>
          
-          <PaginationItem>
+          <PaginationItem style={{borderBottom: "none"}}>
             <PaginationLink next href="#">
               Next
             </PaginationLink>
           </PaginationItem>
-          <PaginationItem>
+          <PaginationItem style={{borderBottom: "none"}}>
             <PaginationLink last href="#">
               Last
             </PaginationLink>

@@ -1,0 +1,11 @@
+/* Styling CSS */
+.dropdown-menu {
+    width: 100%;
+  }
+  
+  .dropdown-menu.show {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: 0.1rem; /* Optional: Add a small margin */
+  }
