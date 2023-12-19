@@ -60,65 +60,91 @@ export const addEmployee = async (req, res) => {
 
 export const editEmployee = async (req, res) => {
     try {
-        const { id } = req.params;
-        const { fullName, email, telephone, username, password, role, address, profileImg } = req.body;
-
-        const prevEmployee = await Employee.findOne({
-            where:{
-                employeeID: id
-            }
+      const { id } = req.params;
+      const {
+        fullName,
+        email,
+        telephone,
+        username,
+        newPassword,
+        role,
+        address,
+        profileImg,
+      } = req.body;
+  
+      const prevEmployee = await Employee.findOne({
+        where: {
+          employeeID: id,
+        },
+      });
+  
+      const checkEmail = await Employee.findOne({
+        where: {
+          email: email,
+        },
+      });
+  
+      const checkUsername = await Employee.findOne({
+        where: {
+          username: username,
+        },
+      });
+  
+      if (checkEmail && prevEmployee.email !== email) {
+        return res.status(200).json({
+          success: false,
+          message: "Email is already used",
         });
-
-        const checkEmail  = await Employee.findOne({where:{
-            email: email,
-        }});
-
-        const checkUsername  = await Employee.findOne({where:{
-            username: username,
-        }});
-
-        if(checkEmail && prevEmployee.email != email){
-            return res.status(200).json({success: false, message: "Email is already used"});
-        }
-
-        if(checkUsername && prevEmployee.username != username){
-            return res.status(200).json({success: false, message: "Username is already used"});
-        }
-
-        if(password.length > 50 && password.length != 60){
-            return res.status(200).json({success: false, message: "The password must be a maximum of 50 characters"});
-        }
-
-        let hashedPassword;
-
-        if(password.length <= 50){
-            hashedPassword = await bcrypt.hash(password, 10);
-        }else if(password.length == 60){
-            hashedPassword = password;
-        }
-
-        await Employee.update({
-            fullName: fullName,
-            email: email,
-            telephone: telephone,
-            username: username,
-            password: hashedPassword,
-            role: role,
-            address: address,
-            profileImg: profileImg,
-        },{
-            where:{
-                employeeID: id,
-            }
+      }
+  
+      if (checkUsername && prevEmployee.username !== username) {
+        return res.status(200).json({
+          success: false,
+          message: "Username is already used",
         });
-
-        return res.status(200).json({success: true, message: `An Employee Account with ID : ${id} Successfully edited`});
-
+      }
+  
+      let updates = {
+        fullName: fullName,
+        email: email,
+        telephone: telephone,
+        username: username,
+        role: role,
+        address: address,
+        profileImg: profileImg,
+      };
+  
+      if (newPassword) {
+        if (newPassword.length > 50) {
+          return res.status(200).json({
+            success: false,
+            message: "The password must be a maximum of 50 characters",
+          });
+        }
+  
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+        updates.password = hashedPassword;
+      }
+  
+      await Employee.update(updates, {
+        where: {
+          employeeID: id,
+        },
+      });
+  
+      return res.status(200).json({
+        success: true,
+        message: `An Employee Account with ID : ${id} Successfully edited`,
+      });
     } catch (error) {
-        console.error(error);
-        return res.status(500).json({ success: false, message: `${error}` });
+      console.error(error);
+      return res.status(500).json({
+        success: false,
+        message: `${error}`,
+      });
     }
-}
+  };
+  
 
 export const destroyEmployee = async (req, res) => {
     try {

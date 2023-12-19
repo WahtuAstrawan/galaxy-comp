@@ -1,6 +1,5 @@
 import {React, useEffect} from 'react'
 import Sidebar from "../../Components/Sidebar/Sidebar"
-import ProductCards from '../../Components/ProductCards/ProductCards';
 import { Helmet } from "react-helmet"
 import './AdminProductPage.css'
 import TableProduct3 from '../../Components/TableProduct3/TableProduct3';

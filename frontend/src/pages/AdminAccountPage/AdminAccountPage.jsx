@@ -2,7 +2,7 @@ import {React, useEffect} from 'react'
 import Sidebar from "../../Components/Sidebar/Sidebar"
 import { Helmet } from "react-helmet"
 import './AdminAccountPage.css'
-import TableProduct2 from '../../Components/TableAccount/TableAccount';
+import TableAccount from '../../Components/TableAccount/TableAccount';
 import NavbarAccount from '../../Components/NavbarAccount/NavbarAccount';
 
 function AdminAccountPage() {
@@ -18,7 +18,7 @@ function AdminAccountPage() {
             <div className="navbarpr"><NavbarAccount/></div>
             <Sidebar/>
             <div className="productsMain">
-                <TableProduct2/>
+                <TableAccount/>
             </div>
         </>
     )
