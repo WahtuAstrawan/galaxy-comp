@@ -2,7 +2,6 @@ import {React, useEffect} from 'react'
 import Sidebar from "../../Components/Sidebar/Sidebar"
 import { Helmet } from "react-helmet"
 import './AdminTransPage.css'
-import Transaction from '../../Components/Transaction/Transaction';
 import NavTrans from '../../Components/NavTrans/NavTrans';
 import TableProductTrans from '../../Components/TableProductTrans/TableProductTrans';
 import Cart from '../../Components/Cart/Cart';

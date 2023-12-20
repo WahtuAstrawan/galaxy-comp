@@ -166,11 +166,13 @@ export const destroyEmployee = async (req, res) => {
 
 export const filterEmployee = async (req, res) => {
     try {
+        console.log(req.query);
+
         const search = req.query.search || "";
         const sortby = req.query.sortby || "updatedAt";
         const order = req.query.order || "DESC";
         const role = req.query.role || null;
-        const page = req.query.page || 1;
+        const page = parseInt(req.query.page) || 1;
 
         let filteredEmployees = await Employee.findAll({
             where: {
@@ -197,6 +199,7 @@ export const filterEmployee = async (req, res) => {
         
     } catch (error) {
         console.error(error);
+        console.log(error);
         return res.status(500).json({ success: false, message: `${error}` });
     }
 };

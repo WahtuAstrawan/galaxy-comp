@@ -3,7 +3,6 @@ import Sidebar from "../../Components/Sidebar/Sidebar"
 import { Helmet } from "react-helmet"
 import './AdminAccountPage.css'
 import TableAccount from '../../Components/TableAccount/TableAccount';
-import NavbarAccount from '../../Components/NavbarAccount/NavbarAccount';
 
 function AdminAccountPage() {
     useEffect(() => {
@@ -15,9 +14,8 @@ function AdminAccountPage() {
             <Helmet>
                 <title>Galaxy Comp | Admin</title>
             </Helmet>
-            <div className="navbarpr"><NavbarAccount/></div>
             <Sidebar/>
-            <div className="productsMain">
+            <div className="accMain">
                 <TableAccount/>
             </div>
         </>

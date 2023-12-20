@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './Sidebar.css'; // Buat file CSS terpisah untuk styling
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import logo from './gcomp.png'
-import { faBars, faChevronLeft, faHome, faShoppingCart, faHistory, faUser, faCog } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faHome, faShoppingCart, faHistory, faUser, faCog } from '@fortawesome/free-solid-svg-icons';
 
 function Sidebar() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);

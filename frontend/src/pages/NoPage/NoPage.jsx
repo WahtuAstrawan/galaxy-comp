@@ -7,6 +7,7 @@ import './NoPage.css'
 function NoPage() {
     useEffect(() =>{
         document.body.classList.add('bg-nopage');
+        localStorage.clear();
     }, []);
 
   return (
