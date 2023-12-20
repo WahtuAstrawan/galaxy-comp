@@ -3,7 +3,8 @@ import Sidebar from "../../Components/Sidebar/Sidebar"
 import { Helmet } from "react-helmet"
 import './AdminHistoryPage.css'
 import TableHistory from '../../Components/TableHistory/TableHistory';
-import NavbarHistory from '../../Components/NavbarHistory/NavbarHistory';
+
+
 
 function AdminHistoryPage() {
     useEffect(() => {
@@ -15,7 +16,6 @@ function AdminHistoryPage() {
             <Helmet>
                 <title>Galaxy Comp | Admin</title>
             </Helmet>
-            <div className="navbarpr"><NavbarHistory/></div>
             <Sidebar/>
             <div className="productsMain">
                 <TableHistory/>

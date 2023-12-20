@@ -1,137 +1,325 @@
 import React, { useState } from 'react';
-import { Table, Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import { UilEye, UilTrashAlt } from '@iconscout/react-unicons';
-import mouse from './mouse.jpg';
-import './TableHistory.css'
-import { v4 as uuidv4 } from 'uuid';
+import { Table, Pagination, PaginationLink, PaginationItem, Navbar, Nav, Input, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem, Button, InputGroup, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Alert } from 'reactstrap';
+import { UilEye, UilTrashAlt, UilPlusCircle, UilInfoCircle} from '@iconscout/react-unicons';
+import axios from 'axios';
+import moment from 'moment';
 
 
-const tableData = [
-    {
-        idtransaction:"",
-        name: "Logitech G Pro X Superlight",
-        cashier: "Arya Wiguna",
-        price: "1,994,000",
-        image: mouse,
-        stored: "2.000.000",
-        moneychanges: "6.000.000",
-        promotion:"-",
-        description: "Logitech G PRO X SUPERLIGHT Mouse Gaming Wireless with HERO Sensor 25K DPI, Ultra-Lightweight for eSports"
-    },
-];
 
 function TableHistory() {
-    const [modal, setModal] = useState(false);
-    const [selectedProduct, setSelectedProduct] = useState(null);
-    const [deleteModal, setDeleteModal] = useState(false);
+    const [modalAdd, setModalAdd] = useState(false);
+    const [modalEdit, setModalEdit] = useState(false);
+    const [modalDel, setModalDel] = useState(false);
+    const [modalDet, setModalDet] = useState(false);
+    const [selectedHis, setSelectedHis] = useState(null);
+    const [search, setSearch] = useState('');
+    const [sortby, setSortby] = useState('');
+    const [order, setOrder] = useState('');
+    const [payMethod, setPayMet] = useState('');
+    const [page, setPage] = useState(1);
+    const [newPw, setNewPw] = useState('');
+    const [activity, setActivity] = useState(0);
+    const [image, setImage] = useState('');
+    const [url, setUrl] = useState('');
+    const [histories, setHistory] = useState([]);
+    const [newHis, setNewHis] = useState({
+        customerName: '',
+        transactionDate: '',
+        totalPrice: '',
+        payMethod: '',
+        totalPay: '',
+        changes: '',
+    });
 
-    const toggle = (product) => {
-        setSelectedProduct(product);
-        setModal(!modal);
-    };
+    const [visible, setVisible] = useState(false);
+    const [color, setColor] = useState('');
+    const [alertMsg, setAlertMsg] = useState('');
 
-    const toggleDeleteModal = () => {
-        setDeleteModal(!deleteModal);
+    const getHistory = async () => {
+        try {
+            const res = await axios.get("http://localhost:8080/transaction/filter", {
+                headers: { 'auth': localStorage.getItem('token') },
+                params: {
+                    search,
+                    sortby,
+                    order,
+                    payMethod,
+                    page
+                }
+            });
+    
+            const formattedHistory = res.data.data.map(history => ({
+                ...history,
+                transactionDate: moment(history.transactionDate).format('dddd, DD-MM-YYYY')
+            }));
+            setHistory(formattedHistory);
+        } catch (error) {
+            console.error("Error fetching history:", error);
+        }
+    }
+
+    const handleDelHis = async (id) => {
+        try {
+            setModalDel(!modalDel);
+            const res = await axios.delete(`http://localhost:8080/transaction/delete/${id}`, {headers: { 'auth': localStorage.getItem('token') }});
+            if(res.data.success){
+                setAlertMsg(res.data.message);
+                setColor('success');
+                setVisible(true);
+                setActivity(activity + 1);
+            }else{
+                setAlertMsg(res.data.message);
+                setColor('danger');
+                setVisible(true);
+            }
+        } catch (error) {
+            setAlertMsg("Delete process failed");
+            setColor('danger');
+            setVisible(true);
+        }
+    }
+
+    const toggle = (his, show) => {
+        setSelectedHis(his);
+        if(show === 1){
+            setModalDet(!modalDet);
+        }else if(show === 2){
+            setModalDel(!modalDel);
+        }
+      };
+    
+      const handleSearch = () => {
+        setActivity(activity + 1);
       };
 
-      const handleDelete = () => {
-        // Implement your delete logic here
-        console.log('Delete button clicked for product:', selectedProduct);
-        setDeleteModal(false);
-      };
+    // useEffect(() => {
+    //     getUsers();
+    // }, [activity])
 
     return (
-        <div className='table-products-section'>
-            <div className="title" style={{ margin: "50px" }}>
-                <h1>History</h1>
-            </div>
-            <div className="search-filter">
+        <>
+            <div>
+            <Navbar style={{ backgroundColor: '#24262b', fontWeight: 'bold', height: '5rem' }}>
+                <Nav className="me-auto" id="normal-navbar">
+                    <InputGroup>
+                    <div className='h-20'>
+                        <Input
+                        type="text"
+                        placeholder="Search"
+                        style={{ marginRight: '1rem', height: '50%' }}
+                        onChange={(e) => {
+                            setSearch(e.target.value);
+                        }}
+                        />
+                    </div>
+                    <div className='px-3'>
+                        <Input
+                        type="select"
+                        name="payMethod"
+                        id="payMethod"
+                        onChange={(e) => {
+                            setPayMet(e.target.value)
+                        }}
+                        >
+                        <option value='' selected>Payment filter</option>
+                        <option value="cash">Cash</option>
+                        <option value="bank">Bank</option>
+                        <option value="qris">Qris</option>
+                        </Input>
+                    </div>
+                    <div className='pr-3'>
+                        <Input
+                        type="select"
+                        name="sortby"
+                        id="sortby"
+                        onChange={(e) => {
+                            setSortby(e.target.value)
+                        }}
+                        >
+                        <option value='' selected>Sort by</option>
+                        <option value="customerName">Customer Name</option>
+                        <option value="totalPrice">Total Price</option>
+                        <option value="totalPay" >Total Pay</option>
+                        <option value="transactionDate" >Transaction Date</option>
+                        </Input>
+                    </div>
+                    <div className='pr-3'>
+                        <Input
+                        type="select"
+                        name="order"
+                        id="order"
+                        onChange={(e) => {
+                            setOrder(e.target.value)
+                        }}
+                        >
+                        <option value='' selected>Order</option>
+                        <option value="ASC">Ascending</option>
+                        <option value="DESC">Descending</option>
+                        </Input>
+                    </div>
+                    <div className='inline-block'>
+                        <Button color="info" onClick={handleSearch}>
+                            Search
+                        </Button>
+                    </div>
+                    </InputGroup>
+                </Nav>
+                </Navbar>
+        
+                <div className='mx-3'>
+                    <Alert color={color} isOpen={visible} toggle={() => setVisible(false)} className='w-2/4 mt-3' style={{ marginLeft: '50%' }}>
+                        {alertMsg}
+                    </Alert>
+                <div className="title" style={{ margin: "50px" }}>
+                    <h1>History</h1>
+                </div>
 
-            </div>
-            <Table className='table-info' style={{ width: "100%" }}>
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Id</th>
-                        <th>Product Name</th>
-                        <th>Cashier</th>
-                        <th>Price</th>
-                        <th>Stored</th>
-                        <th>Change</th>
-                        <th>Promotion</th>
-                        <th>Detail</th>
-                        <th>Action</th>
-                        
-                    </tr>
-                </thead>
-                <tbody>
-                    {Array(10).fill(0).map((_, index) => (
-                        <tr key={index}>
-                            <th scope="row">{index + 1}</th>
-                            <th scope="row">{uuidv4()}</th>
-                            <td>{tableData[0].name}</td>
-                            <td>{tableData[0].cashier}</td>
-                            <td>Rp.{tableData[0].price}</td>
-                            <td>Rp.{tableData[0].stored}</td>
-                            <td>Rp.{tableData[0].moneychanges}</td>
-                            <td>{tableData[0].promotion}</td>
-                            <td>
-                                <a onClick={() => toggle(tableData[0])} className='actionhis1'>
-                                    <UilEye></UilEye>
-                                </a>
-                            </td>
-                            <td>
-                                <Button className="action2" color="danger" onClick={toggleDeleteModal}>
-                                    <UilTrashAlt></UilTrashAlt>
-                                </Button>
-                            </td>
+                <div className="search-filter">
+                </div>
+                <Table className='table-info rounded-full' style={{ width: "100%" }} responsive>
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Customer Name</th>
+                            <th>Transaction Date</th>
+                            <th>Total Price</th>
+                            <th>Payment Method</th>
+                            <th>Total Pay</th>
+                            <th>Changes</th>
+                            <th>Detail</th>
+                            <th>Action</th>
                         </tr>
-                    ))}
-                </tbody>
-            </Table>
-            <Modal isOpen={modal} toggle={() => toggle(selectedProduct)}>
-                <ModalHeader toggle={() => toggle(selectedProduct)}>
-                    {selectedProduct ? selectedProduct.name : ''}
-                </ModalHeader>
-                <ModalBody>
-                    {selectedProduct ? (
-                        <div>
-                            <img src={selectedProduct.image} alt='product-img' style={{ width:"100%" }}></img>
-                            Product Description :
-                            <p style={{ textAlign:"justify" }}>{selectedProduct.description}</p>
-                            Price : Rp.{selectedProduct.price}
-                            <br />
-                            Stock : {selectedProduct.stock} Unit
-                        </div>
-                    ) : null}
-                </ModalBody>
-                <ModalFooter>
-                    <Button color="secondary" onClick={() => toggle(selectedProduct)}>
-                        Close
-                    </Button>
-                </ModalFooter>
-            </Modal>
+                    </thead>
+                    <tbody>
+                        {histories.map((history, index) => (
+                            <tr key={index}>
+                                <th scope="row">{index + 1}</th>
+                                <td>{history.customerName}</td>
+                                <td>{history.transactionDate}</td>
+                                <td>{history.totalPrice}</td>
+                                <td>{history.payMethod}</td>
+                                <td>{history.totalPay}</td>
+                                <td>{history.changes}</td>
+                                <td>
+                                    <Button onClick={() => toggle(history, 1)} className="mx-0.5 bg-blue-400" color='info'>
+                                        <UilInfoCircle></UilInfoCircle>
+                                    </Button>
+                                </td>
+                                <td>
+                                    <Button className="actionhis2" color="danger" onClick={() => toggle(history, 3)}>
+                                        <UilTrashAlt></UilTrashAlt>
+                                    </Button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </Table>
 
-            <Modal isOpen={deleteModal} toggle={toggleDeleteModal}>
-                <ModalHeader toggle={toggleDeleteModal}>
-                    {selectedProduct ? `Delete ${selectedProduct.name}` : ''}
-                </ModalHeader>
-                <ModalBody>
-                    {selectedProduct ? (
-                    <p>Apakah Anda yakin ingin menghapus History ini?</p>
-                    ) : null}
-                </ModalBody>
-                <ModalFooter>
-                    <Button color="danger" onClick={handleDelete}>
-                        Delete
-                    </Button>
-                    <Button color="secondary" onClick={toggleDeleteModal}>
-                        Cancel
-                    </Button>
-                </ModalFooter>
-            </Modal>
+                <Modal isOpen={modalDet} toggle={() => setModalDet(false)}>
+                    <ModalHeader>
+                        Detail Transaction
+                    </ModalHeader>
+                    <ModalBody>
+                        {selectedHis ? (
+                        <>
+                            <table className='table table-light'>
+                    <thead>
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Price Per Unit</th>
+                            <th>Quantity</th>
+                            <th>Sub Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{selectedHis.name}</td>
+                            <td>{selectedHis.unitPrice}</td>
+                            <td>{selectedHis.buyQty}</td>
+                            <td>{selectedHis.subTotal}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                        </>
+                        ) : null}
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button color="secondary" onClick={() => setModalDet(false)}>
+                            Close
+                        </Button>
+                    </ModalFooter>
+                </Modal>
 
+                <Modal isOpen={modalDel} toggle={() => setModalDel(false)}>
+                    <ModalHeader>
+                        Delete History
+                    </ModalHeader>
+                    <ModalBody>
+                        {selectedHis ? 
+                            (<p>{`Apakah kamu yakin menghapus history dengan ini?`}</p>)
+                         : null }
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button color="danger" onClick={() => handleDelHis(selectedHis.transactionID)}>
+                            Delete
+                        </Button>
+                        <Button color="secondary" onClick={() => setModalDel(false)}>
+                            Close
+                        </Button>
+                    </ModalFooter>
+                </Modal>
+
+                <div className="pagination-section" color='info' style={{ borderBottom: "none" }}>
+                    <Pagination style={{ display: "flex", justifyContent: "center", borderBottom: "none" }}>
+                    <PaginationItem disabled={page === 1} style={{borderBottom: "none"}}>
+                        <PaginationLink 
+                        first
+                        onClick={() => {
+                            setPage(1)
+                            setActivity(activity+1)
+                        }}
+                        >
+                        First
+                        </PaginationLink>
+                    </PaginationItem >
+                    <PaginationItem disabled={page === 1} style={{borderBottom: "none"}}>
+                        <PaginationLink
+                        onClick={() => {
+                            setPage(page - 1)
+                            setActivity(activity+1)
+                        }}
+                        previous
+                        >
+                        Previous
+                        </PaginationLink>
+                    </PaginationItem>
+                    <PaginationItem style={{borderBottom: "none"}}>
+                        <PaginationLink
+                        onClick={() => {
+                            setPage(page + 1)
+                            setActivity(activity+1)
+                        }}
+                        next
+                        >
+                        Next
+                        </PaginationLink>
+                    </PaginationItem>
+                    <PaginationItem style={{borderBottom: "none"}}>
+                        <PaginationLink
+                        onClick={() => {
+                            setPage(Math.ceil(histories.length / 10))
+                            setActivity(activity+1)
+                        }}
+                        last
+                        >
+                        Last
+                        </PaginationLink>
+                    </PaginationItem>
+                    </Pagination>
+                </div>
+            </div>
         </div>
+        </>
     )
 }
 

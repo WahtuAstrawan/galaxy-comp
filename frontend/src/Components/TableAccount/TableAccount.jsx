@@ -167,9 +167,9 @@ function TableAccount() {
         setActivity(activity + 1);
       };
 
-    useEffect(() => {
-        getUsers();
-    }, [activity])
+    // useEffect(() => {
+    //     getUsers();
+    // }, [activity])
 
     return (
         <>
@@ -541,6 +541,7 @@ function TableAccount() {
                         </Button>
                     </ModalFooter>
                 </Modal>
+                
                 <Modal isOpen={modalDel} toggle={() => setModalDel(false)}>
                     <ModalHeader>
                         Delete Account
