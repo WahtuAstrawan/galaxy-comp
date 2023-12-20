@@ -4,7 +4,7 @@ import { Op } from "sequelize";
 
 export const viewTrend = async (req, res) => {
     try {
-        const page = req.query.page || 1;
+        const page = parseInt(req.query.page) || 1;
 
         const trendProducts = await Product.findAll({
             order: [
@@ -36,11 +36,11 @@ export const viewIncome = async (req, res) => {
             },
         });
 
-        let totalGrossIncome = 0;
+        let totalGrosIncome = 0;
         let totalNetIncome = 0;
 
         for (const transaction of transactions) {
-            totalGrossIncome += transaction.subTotal;
+            totalGrosIncome += Number(transaction.subTotal);
             const product = await Product.findByPk(transaction.productProductID);
             totalNetIncome += transaction.subTotal - (product.basePrice * transaction.buyQty);
         }
@@ -49,7 +49,7 @@ export const viewIncome = async (req, res) => {
             success: true,
             message: "Successfully fetched income data",
             data: {
-                totalGrossIncome,
+                totalGrosIncome,
                 totalNetIncome,
             },
         });

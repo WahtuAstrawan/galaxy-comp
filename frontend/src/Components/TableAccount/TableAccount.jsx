@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Pagination, PaginationLink, PaginationItem, Navbar, Nav, Input, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem, Button, InputGroup, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Alert } from 'reactstrap';
-import { UilEdit, UilTrashAlt, UilInfoCircle, UilUserPlus, UilSearch } from '@iconscout/react-unicons';
+import { Table, Pagination, PaginationLink, PaginationItem, Navbar, Nav, Input, Button, InputGroup, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Alert } from 'reactstrap';
+import { UilEdit, UilTrashAlt, UilInfoCircle, UilUserPlus } from '@iconscout/react-unicons';
 import axios from 'axios';
 
 function TableAccount() {
@@ -16,7 +16,6 @@ function TableAccount() {
     const [page, setPage] = useState(1);
     const [newPw, setNewPw] = useState('');
     const [activity, setActivity] = useState(0);
-    const [image, setImage] = useState('');
     const [url, setUrl] = useState('');
     const [users, setUsers] = useState([]);
     const [newAcc, setNewAcc] = useState({
@@ -26,8 +25,7 @@ function TableAccount() {
         username: '',
         password: '',
         role: '',
-        address: '',
-        profileImg: ''
+        address: ''
     });
 
     const [visible, setVisible] = useState(false);
@@ -49,10 +47,18 @@ function TableAccount() {
     const handleAddAcc = async () => {
         try {
             toggleModalAdd();
-            uploadImage();
             console.error(url);
-            setNewAcc({...newAcc, profileImg: url});
-            const res = await axios.post("http://localhost:8080/employee/add", newAcc, {headers: { 'auth': localStorage.getItem('token') }});
+            const res = await axios.post("http://localhost:8080/employee/add", {
+                fullName: newAcc.fullName,
+                email: newAcc.email,
+                telephone: newAcc.telephone,
+                username: newAcc.username,
+                password: newAcc.password,
+                role: newAcc.role,
+                address: newAcc.address,
+                profileImg: url,
+            }
+            , {headers: { 'auth': localStorage.getItem('token') }});
 
             if(res.data.success){
                 setAlertMsg(res.data.message);
@@ -75,11 +81,6 @@ function TableAccount() {
     const handleEditAcc = async (id) => {
         try {
             setModalEdit(!modalEdit);
-            if(image){
-                uploadImage();
-                setSelectedAcc({...selectedAcc, profileImg: url});
-            }
-
             const res = await axios.put(`http://localhost:8080/employee/edit/${id}`, {
                 fullName: selectedAcc.fullName,
                 email: selectedAcc.email,
@@ -88,7 +89,7 @@ function TableAccount() {
                 newPassword: newPw,
                 role: selectedAcc.role,
                 address: selectedAcc.address,
-                profileImg: selectedAcc.profileImg,
+                profileImg: url
             }, {headers: { 'auth': localStorage.getItem('token') }});
             
             if(res.data.success){
@@ -133,23 +134,16 @@ function TableAccount() {
         setModalAdd(!modalAdd);
       };
 
-    const uploadImage = () => {
-        if (image) {
-            const formData = new FormData();
-            formData.append("image", image);
-            console.error(formData);
+    const uploadImage = (e) => {
+        const file = e.target.files[0];
+        const formData = new FormData();
+        formData.append("image", file);
 
-            axios.post("https://api.imgbb.com/1/upload", formData, {params: {key: 'e11ba24bc5858be6db517496779d5669'}}).then((res) => {
-                console.error(res.data);
-                setUrl(res.data.data.display_url);
-            }).catch((err) => {
-                console.error(err);
-            });
-        } else {
-            setAlertMsg("Make sure to include an image");
-            setColor('danger');
-            setVisible(true);
-        }
+        axios.post("https://api.imgbb.com/1/upload?key=1f11b71d1ad2a67aec0143de5ea5be1f", formData).then((res) => {
+            setUrl(res.data.data.url);
+        }).catch((err) => {
+            console.error(err);
+        })
     };
 
     const toggle = (acc, show) => {
@@ -242,7 +236,7 @@ function TableAccount() {
                 </Navbar>
 
                 <Modal isOpen={modalAdd} toggle={toggleModalAdd}>
-                <ModalHeader toggle={toggleModalAdd}>Add Product</ModalHeader>
+                <ModalHeader toggle={toggleModalAdd}>Add Account</ModalHeader>
                 <ModalBody>
                     <Form>
                     <FormGroup>
@@ -334,7 +328,7 @@ function TableAccount() {
                         name="image"
                         id="image"
                         accept='image/*'
-                        onChange={(e) => setImage(e.target.files[0])}
+                        onChange={(e) => uploadImage(e)}
                         required
                         />
                     </FormGroup>
@@ -525,7 +519,7 @@ function TableAccount() {
                                     id="image"
                                     accept='image/*'
                                     onChange={(e) => 
-                                        setImage(e.target.files[0])
+                                        uploadImage(e)
                                     }
                                     />
                                 </FormGroup>

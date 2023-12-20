@@ -10,7 +10,7 @@ import Cart from '../../Components/Cart/Cart';
 
 function AdminTransPage() {
     useEffect(() => {
-        document.body.classList.add('bg-admin1');
+        document.body.classList.add('bg-admin');
     }, []);
     
     return(
@@ -18,12 +18,8 @@ function AdminTransPage() {
             <Helmet>
                 <title>Galaxy Comp | Admin</title>
             </Helmet>
-            <div className="navtr"><NavTrans/></div>
             <Sidebar/>
             <div className="list"><TableProductTrans/></div>
-            <div className="cartp"><Cart/></div>
-            
-           
         </>
     )
 }

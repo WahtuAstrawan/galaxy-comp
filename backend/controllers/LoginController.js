@@ -88,3 +88,23 @@ export const getRole = async (req, res) => {
         return res.status(500).json({success: false, message: `${error}`});
     }
 }
+
+export const getUsername = async (req, res) => {
+    try {
+        const token = req.headers.auth;
+        if(token){
+            jwt.verify(token, env.JWT_SECRET, (err, user) => {
+                if(err){
+                    return res.status(200).json({success: false, message: "Token is not valid!"});
+                }
+
+                return res.status(200).json({success: true, username: user.username});
+            });
+        }else{
+            return res.status(200).json({success: false, message: "Warning, you are not authenticated!"});
+        }
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({success: false, message: `${error}`});
+    }
+}

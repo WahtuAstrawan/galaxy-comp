@@ -8,6 +8,6 @@ const DashboardRouter = express.Router();
 DashboardRouter.get("/trend", viewTrend);
 DashboardRouter.get("/all", viewProduct);
 DashboardRouter.get("/filter", filterProduct);
-DashboardRouter.get("/income", verifyAuth, isAdmin, viewIncome);
+DashboardRouter.get("/income", verifyAuth, viewIncome);
 
 export default DashboardRouter;
