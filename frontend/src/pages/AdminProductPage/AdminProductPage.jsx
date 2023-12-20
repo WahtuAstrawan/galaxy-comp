@@ -3,7 +3,8 @@ import Sidebar from "../../Components/Sidebar/Sidebar"
 import { Helmet } from "react-helmet"
 import './AdminProductPage.css'
 import TableProduct3 from '../../Components/TableProduct3/TableProduct3';
-import NavbarProduct from '../../Components/NavbarProduct/NavbarProduct';
+// import NavbarProduct from '../../Components/NavbarProduct/NavbarProduct';
+// import TableProduct2 from '../../Components/TableProduct2/TableProduct2';
 
 function AdminProductPage() {
     useEffect(() => {
@@ -15,7 +16,7 @@ function AdminProductPage() {
             <Helmet>
                 <title>Galaxy Comp | Admin</title>
             </Helmet>
-            <div className="navbarpr"><NavbarProduct/></div>
+           
             <Sidebar/>
             <div className="productsMain">
                 <TableProduct3/>

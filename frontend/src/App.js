@@ -21,17 +21,17 @@ function App() {
               <Route path='/login' element={<LoginPage/>}/>
 
               <Route element={<RequireAuth allowedRoles={['7134', '4169']}/>}>
+              </Route>
                 <Route path='/admin' element={<AdminPage/>}/>
                 <Route path='/admin/history' element={<AdminHistoryPage/>}/>
                 <Route path='/admin/transaction' element={<AdminTransPage/>}/>
                 <Route path='/admin/profile' element={<AdminProfilePage/>}/>
-              </Route>
 
               <Route element={<RequireAuth allowedRoles={['7134']}/>}>
+              </Route>
                 <Route path='/admin/product' element={<AdminProductPage/>}/>
                 <Route path='/admin/account' element={<AdminAccountPage/>}/>
                 <Route path='/admin/profile' element={<AdminProfilePage/>}/>
-              </Route>
               <Route path='*' element={<NoPage/>}/>
             </Route>
         </Routes>
