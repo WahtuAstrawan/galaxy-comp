@@ -16,7 +16,6 @@ function TableProduct3() {
   const [order, setOrder] = useState('');
   const [category, setCategory] = useState('');
   const [page, setPage] = useState(1);
-  const [newPw, setNewPw] = useState('');
   const [activity, setActivity] = useState(0);
   const [image, setImage] = useState('');
   const [url, setUrl] = useState('');
@@ -29,7 +28,6 @@ function TableProduct3() {
       sellPrice: '',
       qtySold: '',
       category: '',
-      productImg: ''
   });
 
   const [visible, setVisible] = useState(false);
@@ -51,10 +49,16 @@ function TableProduct3() {
   const handleAddProd = async () => {
       try {
           toggleModalAdd();
-          uploadImage();
-          console.error(url);
-          setNewProd({...newProd, profileImg: url});
-          const res = await axios.post("http://localhost:8080/product/add", newProd, {headers: { 'auth': localStorage.getItem('token') }});
+          const res = await axios.post("http://localhost:8080/product/add", {
+            name: newProd.name,
+            stock: newProd.stock,
+            desc: newProd.desc,
+            basePrice: newProd.basePrice,
+            sellPrice: newProd.sellPrice,
+            qtySold: newProd.qtySold,
+            category: newProd.category,
+            productImg: url
+          }, {headers: { 'auth': localStorage.getItem('token') }});
 
           if(res.data.success){
               setAlertMsg(res.data.message);
@@ -77,11 +81,7 @@ function TableProduct3() {
   const handleEditProd = async (id) => {
       try {
           setModalEdit(!modalEdit);
-          if(image){
-              uploadImage();
-              setSelectedProd({...selectedProd, profileImg: url});
-          }
-
+          console.error(url);
           const res = await axios.put(`http://localhost:8080/product/edit/${id}`, {
               name: selectedProd.name,
               stock: selectedProd.stock,
@@ -89,7 +89,7 @@ function TableProduct3() {
               basePrice: selectedProd.basePrice,
               sellPrice: selectedProd.sellPrice,
               category: selectedProd.category,
-              productImg: selectedProd.productImg,
+              productImg: url,
           }, {headers: { 'auth': localStorage.getItem('token') }});
           
           if(res.data.success){
@@ -134,24 +134,17 @@ function TableProduct3() {
       setModalAdd(!modalAdd);
     };
 
-  const uploadImage = () => {
-      if (image) {
-          const formData = new FormData();
-          formData.append("image", image);
-          console.error(formData);
+    const uploadImage = (e) => {
+        const file = e.target.files[0];
+        const formData = new FormData();
+        formData.append("image", file);
 
-          axios.post("https://api.imgbb.com/1/upload", formData, {params: {key: 'e11ba24bc5858be6db517496779d5669'}}).then((res) => {
-              console.error(res.data);
-              setUrl(res.data.data.display_url);
-          }).catch((err) => {
-              console.error(err);
-          });
-      } else {
-          setAlertMsg("Make sure to include an image");
-          setColor('danger');
-          setVisible(true);
-      }
-  };
+        axios.post("https://api.imgbb.com/1/upload?key=1f11b71d1ad2a67aec0143de5ea5be1f", formData).then((res) => {
+            setUrl(res.data.data.url);
+        }).catch((err) => {
+            console.error(err);
+        })
+    };
 
   const toggle = (prod, show) => {
       setSelectedProd(prod);
@@ -168,9 +161,9 @@ function TableProduct3() {
       setActivity(activity + 1);
     };
 
-  // useEffect(() => {
-  //     getUsers();
-  // }, [activity])
+  useEffect(() => {
+      getProducts();
+  }, [activity])
 
   return (
         <>
@@ -277,7 +270,7 @@ function TableProduct3() {
                     <FormGroup>
                         <Label for="desc">Description</Label>
                         <Input
-                        type="text"
+                        type="textarea"
                         name="desc"
                         id="desc"
                         placeholder="Enter Description"
@@ -338,7 +331,7 @@ function TableProduct3() {
                         name="image"
                         id="image"
                         accept='image/*'
-                        onChange={(e) => setImage(e.target.files[0])}
+                        onChange={(e) => {uploadImage(e)}}
                         required
                         />
                     </FormGroup>
@@ -387,10 +380,9 @@ function TableProduct3() {
                             <tr key={index}>
                                 <th scope="row">{index + 1}</th>
                                 <td>{product.name}</td>
-                                <td>{product.stock}</td>
-                                <td>{product.desc}</td>
-                                <td>{product.basePrice}</td>
-                                <td>{product.sellPrice}</td>
+                                <td>{product.stock} Unit</td>
+                                <td>Rp.{product.basePrice}</td>
+                                <td>Rp.{product.sellPrice}</td>
                                 <td>{product.category}</td>
                                 <td>
                                     <Button onClick={() => toggle(product, 1)} className="mx-0.5 bg-blue-400" color='info'>
@@ -418,13 +410,13 @@ function TableProduct3() {
                         {selectedProd ? (
                         <>
                             <div className='flex justify-center w-full'>
-                                <img src={selectedProd.productImg} alt='profile-img' style={{ width: "50%", height: "50%" }} className='rounded-full'></img>
+                                <img src={selectedProd.productImg} alt='product-img' style={{ width: "70%" }}></img>
                             </div>
                             <div className='py-3'>
                                 Product Name :
                                 <p style={{ textAlign: "justify" }}>{selectedProd.name}</p>
-                                Stock :
-                                <p style={{ textAlign: "justify" }}>{selectedProd.stock}</p>
+                                Desc :
+                                <p style={{ textAlign: "justify" }}>{selectedProd.desc}</p>
                             </div>
                         </>
                         ) : null}
@@ -465,7 +457,7 @@ function TableProduct3() {
                                     />
                                 </FormGroup>
                                 <FormGroup>
-                                    <Label for="desc">Stock</Label>
+                                    <Label for="desc">Description</Label>
                                     <Input
                                         type="text"
                                         name="desc"
@@ -528,7 +520,7 @@ function TableProduct3() {
                                     id="image"
                                     accept='image/*'
                                     onChange={(e) => 
-                                        setImage(e.target.files[0])
+                                        uploadImage(e)
                                     }
                                     />
                                 </FormGroup>

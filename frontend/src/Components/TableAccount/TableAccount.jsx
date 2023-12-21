@@ -161,9 +161,9 @@ function TableAccount() {
         setActivity(activity + 1);
       };
 
-    // useEffect(() => {
-    //     getUsers();
-    // }, [activity])
+    useEffect(() => {
+        getUsers();
+    }, [activity])
 
     return (
         <>
@@ -406,7 +406,7 @@ function TableAccount() {
                         {selectedAcc ? (
                         <>
                             <div className='flex justify-center w-full'>
-                                <img src={selectedAcc.profileImg} alt='profile-img' style={{ width: "50%", height: "50%" }} className='rounded-full'></img>
+                                <img src={selectedAcc.profileImg} alt='profile-img' style={{ width: "70%", height:'70%' }} className='rounded-full'></img>
                             </div>
                             <div className='py-3'>
                                 Fullname :

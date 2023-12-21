@@ -13,11 +13,13 @@ function TableProduct2() {
 
   const toggle = (product) => {
     setSelectedProduct(product);
+    console.log(selectedProduct);
     setModal(!modal);
   };
 
   const getTrend = async () => {
     const res = await axios.get("http://localhost:8080/dashboard/trend", {params: {page}});
+    console.log(res.data.data);
     setProducts(res.data.data)
   }
 
@@ -117,11 +119,14 @@ function TableProduct2() {
           {selectedProduct && (
             <div>
               <img src={selectedProduct.productImg} alt='product-img' style={{ width: "100%" }}></img>
-              Product Description:
-              <p style={{ textAlign: "justify" }}>{selectedProduct.description}</p>
-              Price: Rp.{selectedProduct.sellprice}
+              <bold>Product Name:</bold>{selectedProduct.name}
               <br />
-              Stock: {selectedProduct.stock} Unit
+              Product Description:
+              <p style={{ textAlign: "justify" }}>{selectedProduct.desc}</p>
+              Price   : Rp.{selectedProduct.sellPrice}
+              <br />
+              Stock   : {selectedProduct.stock} Unit
+              <br />
             </div>
           )}
         </ModalBody>

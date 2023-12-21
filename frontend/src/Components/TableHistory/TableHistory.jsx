@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Table, Pagination, PaginationLink, PaginationItem, Navbar, Nav, Input, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem, Button, InputGroup, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Alert } from 'reactstrap';
 import { UilEye, UilTrashAlt, UilPlusCircle, UilInfoCircle} from '@iconscout/react-unicons';
 import axios from 'axios';
@@ -7,8 +7,6 @@ import moment from 'moment';
 
 
 function TableHistory() {
-    const [modalAdd, setModalAdd] = useState(false);
-    const [modalEdit, setModalEdit] = useState(false);
     const [modalDel, setModalDel] = useState(false);
     const [modalDet, setModalDet] = useState(false);
     const [selectedHis, setSelectedHis] = useState(null);
@@ -17,19 +15,8 @@ function TableHistory() {
     const [order, setOrder] = useState('');
     const [payMethod, setPayMet] = useState('');
     const [page, setPage] = useState(1);
-    const [newPw, setNewPw] = useState('');
     const [activity, setActivity] = useState(0);
-    const [image, setImage] = useState('');
-    const [url, setUrl] = useState('');
-    const [histories, setHistory] = useState([]);
-    const [newHis, setNewHis] = useState({
-        customerName: '',
-        transactionDate: '',
-        totalPrice: '',
-        payMethod: '',
-        totalPay: '',
-        changes: '',
-    });
+    const [histories, setHistories] = useState([]);
 
     const [visible, setVisible] = useState(false);
     const [color, setColor] = useState('');
@@ -52,7 +39,8 @@ function TableHistory() {
                 ...history,
                 transactionDate: moment(history.transactionDate).format('dddd, DD-MM-YYYY')
             }));
-            setHistory(formattedHistory);
+
+            setHistories(formattedHistory);
         } catch (error) {
             console.error("Error fetching history:", error);
         }
@@ -92,9 +80,9 @@ function TableHistory() {
         setActivity(activity + 1);
       };
 
-    // useEffect(() => {
-    //     getUsers();
-    // }, [activity])
+    useEffect(() => {
+        getHistory();
+    }, [activity])
 
     return (
         <>
@@ -196,17 +184,17 @@ function TableHistory() {
                                 <th scope="row">{index + 1}</th>
                                 <td>{history.customerName}</td>
                                 <td>{history.transactionDate}</td>
-                                <td>{history.totalPrice}</td>
+                                <td>Rp.{history.totalPrice}</td>
                                 <td>{history.payMethod}</td>
-                                <td>{history.totalPay}</td>
-                                <td>{history.changes}</td>
+                                <td>Rp.{history.totalPay}</td>
+                                <td>Rp.{history.changes}</td>
                                 <td>
                                     <Button onClick={() => toggle(history, 1)} className="mx-0.5 bg-blue-400" color='info'>
                                         <UilInfoCircle></UilInfoCircle>
                                     </Button>
                                 </td>
                                 <td>
-                                    <Button className="actionhis2" color="danger" onClick={() => toggle(history, 3)}>
+                                    <Button className="actionhis2" color="danger" onClick={() => toggle(history, 2)}>
                                         <UilTrashAlt></UilTrashAlt>
                                     </Button>
                                 </td>
@@ -223,32 +211,32 @@ function TableHistory() {
                         {selectedHis ? (
                         <>
                             <table className='table table-light'>
-                    <thead>
-                        <tr>
-                            <th>Product Name</th>
-                            <th>Price Per Unit</th>
-                            <th>Quantity</th>
-                            <th>Sub Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{selectedHis.name}</td>
-                            <td>{selectedHis.unitPrice}</td>
-                            <td>{selectedHis.buyQty}</td>
-                            <td>{selectedHis.subTotal}</td>
-                        </tr>
-                    </tbody>
-                </table>
+                            <thead>
+                                <tr>
+                                <th>Product ID</th>
+                                <th>Quantity</th>
+                                <th>Sub Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {selectedHis.detail_transactions.map((detail, index) => (
+                                <tr key={index}>
+                                    <td>{detail.productProductID}</td>
+                                    <td>{detail.buyQty} Unit</td>
+                                    <td>Rp.{detail.subTotal}</td>
+                                </tr>
+                                ))}
+                            </tbody>
+                            </table>
                         </>
                         ) : null}
                     </ModalBody>
                     <ModalFooter>
                         <Button color="secondary" onClick={() => setModalDet(false)}>
-                            Close
+                        Close
                         </Button>
                     </ModalFooter>
-                </Modal>
+                    </Modal>
 
                 <Modal isOpen={modalDel} toggle={() => setModalDel(false)}>
                     <ModalHeader>

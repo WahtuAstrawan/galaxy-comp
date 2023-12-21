@@ -44,8 +44,8 @@ export const addTransaction = async (req, res) => {
 
             const updatedProduct = await Product.findByPk(detail.productID);
             await updatedProduct.update({
-                stock: updatedProduct.stock - detail.buyQty,
-                qtySold: updatedProduct.qtySold + detail.buyQty
+                stock: updatedProduct.stock - parseInt(detail.buyQty),
+                qtySold: updatedProduct.qtySold + parseInt(detail.buyQty)
             });
         }
 

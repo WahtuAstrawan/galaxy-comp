@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Button, Modal, ModalHeader, ModalBody, ModalFooter, Pagination, PaginationItem, PaginationLink, Navbar, Nav, InputGroup, Input, Form, FormGroup, Label } from 'reactstrap';
+import { Table, Button, Modal, ModalHeader, ModalBody, ModalFooter, Pagination, PaginationItem, PaginationLink, Navbar, Nav, InputGroup, Input, Form, FormGroup, Label, Alert } from 'reactstrap';
 import { UilEye, UilPlus, UilInfoCircle } from '@iconscout/react-unicons';
 import axios from 'axios';
-
-import mouse from './mouse.jpg';
 
 function TableProduct3() {
   const [modalDet, setModalDet] = useState(false);
@@ -14,9 +12,23 @@ function TableProduct3() {
   const [sortby, setSortby] = useState('');
   const [order, setOrder] = useState('');
   const [category, setCategory] = useState('');
+  const [id, setId] = useState(0);
   const [page, setPage] = useState(1);
   const [products, setProducts] = useState([]);
   const [activity, setActivity] = useState(0);
+  const [colorCart, setColorCart] = useState('');  
+  const [visibleCart, setVisibleCart] = useState(false); 
+  const [alertCartMsg, setAlertCartMsg] = useState('');  
+
+  const [newTrans, setNewTrans] = useState({
+    customerName: '',
+    payMethod: '',
+    totalPrice: 0,
+    totalPay: null,
+    changes: null,
+    employeeID: 0,
+  })
+
   const [detail, setDetail] = useState({
     buyQty: null,
     subTotal: null,
@@ -53,16 +65,69 @@ function TableProduct3() {
     }
   }
 
+  const calculateTotalPrice = () => {
+    return details.reduce((acc, detail) => acc + detail.subTotal, 0);
+  };
+
+  const handleAddTrans = async () => {
+    try {
+      const totalPrice = calculateTotalPrice();
+
+      const res = await axios.get("http://localhost:8080/login/id", {headers: {'auth': localStorage.getItem('token')}});
+      console.error(res.data);
+      
+      setId(res.data.id);
+      const postData = {
+        customerName: newTrans.customerName,
+        payMethod: newTrans.payMethod,
+        totalPrice: totalPrice,
+        totalPay: newTrans.totalPay,
+        changes: newTrans.changes,
+        employeeID: id,
+        details: details.map((detail) => ({
+          productID: detail.productID,
+          buyQty: detail.buyQty,
+          subTotal: detail.subTotal,
+        })),
+      };
+  
+      const response = await axios.post("http://localhost:8080/transaction/add", postData, {headers: {'auth': localStorage.getItem('token')}});
+
+      setDetails([]);
+      setModalConfirm(false);
+      setActivity(activity+1);
+
+      setAlertCartMsg('Transaction added successfully');
+      setColorCart('success');
+      setVisibleCart(true);
+    } catch (error) {
+      console.error(error);
+
+      setAlertCartMsg('Error adding transaction');
+      setColorCart('danger');
+      setVisibleCart(true);
+    }
+  };
+
+  
+
   const handleAddCart = () => {
     setDetails([...details, { ...detail, productID: selectedProduct.productID, subTotal: selectedProduct.sellPrice * detail.buyQty, productName: selectedProduct.name }]);
     setModalAdd(false);
+
+    setAlertCartMsg('Product added to cart successfully');
+    setColorCart('success');
+    setVisibleCart(true);
   }
 
   const handleDeleteFromCart = (index) => {
-    // Update the state to remove the selected product from the cart
     const updatedDetails = [...details];
     updatedDetails.splice(index, 1);
     setDetails(updatedDetails);
+
+    setAlertCartMsg('Product removed from cart successfully');
+    setColorCart('success');
+    setVisibleCart(true);
   };
 
   const handleSearch = () => {
@@ -78,6 +143,9 @@ function TableProduct3() {
       <div className="title" style={{ margin: "50px" }}>
         <h1>Product List</h1>
       </div>
+      <Alert color={colorCart} isOpen={visibleCart} toggle={() => setVisibleCart(false)} className='w-2/4 mt-3' style={{ marginLeft: '50%' }}>
+        {alertCartMsg}
+      </Alert>
       <div className="search-filter">
         <Navbar style={{ backgroundColor: '#24262b', fontWeight: 'bold', height: '5rem' }}>
           <Nav className="me-auto" id="normal-navbar">
@@ -238,11 +306,11 @@ function TableProduct3() {
           </Pagination>
       </div>
       
-      <div className="title" style={{ margin: "50px" }}>
+      <div className="title" style={{ marginTop: "10px" }}>
         <h1>Carts</h1>
       </div>
 
-      <Table className='table-info' style={{ width: "100%", backgroundColor: "white" }}>
+      <Table className='table-info' style={{ width: "100%", backgroundColor: "white"}}>
         <thead>
           <tr>
             <th>No</th>
@@ -268,18 +336,21 @@ function TableProduct3() {
               ))}
         </tbody>
       </Table>
-      <Button color='success' onClick={() => {setModalConfirm(true)}}>
-            Confirm Purchase
-      </Button>
+      {details[0] ? (
+        <Button color='success' onClick={() => {setModalConfirm(true)}}>
+              Confirm Purchase
+        </Button>
+      ) : null}
+
 
       <Modal isOpen={modalDet} toggle={() => toggle(selectedProduct, 1)}>
         <ModalHeader>
-          {selectedProduct ? selectedProduct.name : ''}
+          Detail Product
         </ModalHeader>
         <ModalBody>
           {selectedProduct ? (
             <div>
-              <img src={selectedProduct.productImg} alt='product-img' style={{ width: "100%", borderBottom:"none" }}></img>
+              <img src={selectedProduct.productImg} alt='product-img' style={{ width: "70%", borderBottom:"none" }}></img>
               Product Description :
               <p style={{ textAlign: "justify" }}>{selectedProduct.desc}</p>
               Price : Rp.{selectedProduct.sellPrice}
@@ -291,7 +362,7 @@ function TableProduct3() {
           ) : null}
         </ModalBody>
         <ModalFooter>
-          <Button color="secondary" onClick={() => toggle(selectedProduct)}>
+          <Button color="secondary" onClick={() => toggle(selectedProduct, 1)}>
             Close
           </Button>
         </ModalFooter>
@@ -302,21 +373,88 @@ function TableProduct3() {
           Confirm your purchase
         </ModalHeader>
         <ModalBody>
-          {selectedProduct ? (
-            <div>
-              <img src={selectedProduct.productImg} alt='product-img' style={{ width: "100%", borderBottom:"none" }}></img>
-              Product Description :
-              <p style={{ textAlign: "justify" }}>{selectedProduct.desc}</p>
-              Price : Rp.{selectedProduct.sellPrice}
-              <br />
-              Stock : {selectedProduct.stock} Unit
-              <br />
-              Qty Sold : {selectedProduct.qtySold} Unit
-            </div>
-          ) : null}
+            <Label>Detail Purchase</Label>
+            <Table className='table-light' style={{ width: "100%", backgroundColor: "white"}}>
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Product Name</th>
+                <th>Buy Qty</th>
+                <th>Sub Total</th>
+              </tr>
+            </thead>
+            <tbody>
+                  {details.map((detail, index) => (
+                    <tr key={index}>
+                      <th scope="row">{index + 1}</th>
+                      <td>{detail.productName}</td>
+                      <td>{detail.buyQty} Unit</td>
+                      <td>Rp.{detail.subTotal}</td>
+                    </tr>
+                  ))}
+            </tbody>
+            </Table>
+            <Label>Total Price</Label>
+            <Input
+              type="number"
+              name="totalPrice"
+              id="totalPrice"
+              placeholder="Total Price"
+              value={details.reduce((acc, detail) => acc + detail.subTotal, 0)}
+              onChange={(e) => setNewTrans({ ...newTrans, totalPrice: e.target.value })}
+              required
+              />
+            <Label>Total Pay</Label>
+            <Input
+              type="number"
+              name="totalPay"
+              id="totalPay"
+              placeholder="Enter Customer Pay"
+              onChange={(e) => {
+                const totalPay = parseFloat(e.target.value);
+                const changes = -(details.reduce((acc, detail) => acc + detail.subTotal, 0) - totalPay);
+                setNewTrans({ ...newTrans, totalPay, changes });
+              }}
+              required
+            />
+            <Label>Pay Method</Label>
+            <Input
+              type="select"
+              name="payMethod"
+              id="payMethod"
+              onChange={(e) => setNewTrans({ ...newTrans, payMethod: e.target.value })}
+              required
+            >
+              <option value='' selected>Pay Method</option>
+              <option value="bank">Bank</option>
+              <option value="qris">Qris</option>
+              <option value="cash">Cash</option>
+            </Input>
+
+            <Label>Changes</Label>
+            <Input
+              type="number"
+              name="changes"
+              id="changes"
+              placeholder="Changes"
+              value={newTrans.changes || 0}
+              required
+            />
+            <Label>Customer Name</Label>
+            <Input
+              type="text"
+              name="customerName"
+              id="customerName"
+              placeholder="Enter customer name"
+              onChange={(e) => setNewTrans({ ...newTrans, customerName: e.target.value })}
+              required
+            />
         </ModalBody>
         <ModalFooter>
-          <Button color="secondary" onClick={() => toggle(selectedProduct)}>
+          <Button color="success" onClick={() => handleAddTrans()}>
+            Add
+          </Button>
+          <Button color="secondary" onClick={() => toggle(selectedProduct, 3)}>
             Close
           </Button>
         </ModalFooter>
@@ -344,7 +482,7 @@ function TableProduct3() {
                             type="number"
                             name="buyQty"
                             id="buyQty"
-                            placeholder="Enter buy qty"
+                            placeholder="Enter Buy Qty"
                             onChange={(e) => setDetail({ ...detail, buyQty: e.target.value })}
                             required
                         />
@@ -353,7 +491,7 @@ function TableProduct3() {
                             type="number"
                             name="subTotal"
                             id="subTotal"
-                            placeholder="Enter full name"
+                            placeholder="Subtotal"
                             value={detail.buyQty * selectedProduct.sellPrice}
                             onChange={(e) => setDetail({ ...detail, subTotal: e.target.value })}
                             required
