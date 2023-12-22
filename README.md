@@ -1,7 +1,7 @@
 # Galaxy Comp Fullstack Website
 
 ### Galaxy Comp 
-is a information system hardware computer store website that can handle crud operation, transaction, auth, authorization, 
+is a information system hardware computer store website that can handle crud operation, transaction, auth, authorization with JWT, 
 pagination, filtering, sorting, and view the data in the landing page that can be seen by the customer
 
 ### Technology usage
